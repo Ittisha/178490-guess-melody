@@ -1,7 +1,7 @@
 # Личный проект «Угадай мелодию» [![Build status][travis-image]][travis-url]
 
 * Студент: [Anna Zezulkina](https://up.htmlacademy.ru/ecmascript/3/user/178490).
-* Наставник: `Неизвестно`.
+* Наставник: [Игорь Антонов](https://up.htmlacademy.ru/ecmascript/3/user/3162).
 
 ---
 
