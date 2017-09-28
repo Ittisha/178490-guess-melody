@@ -1,4 +1,4 @@
-const ORDERED_CLASSES = [
+const SCREENS_ORDERED_CLASSES = [
   `main--welcome`,
   `main--level-genre`,
   `main--level-artist`,
@@ -20,12 +20,12 @@ const appScreen = document.querySelector(`.app .main`);
 
 /**
  * Line up screen templates in predetermined order
- * @param {...string} args
+ * @param {Array} screensClassesArray
  * @return {Array}
  */
-const sortScreens = (...args) => {
+const sortScreens = (screensClassesArray) => {
   const screens = [];
-  args.forEach((element) => {
+  screensClassesArray.forEach((element) => {
     screens.push(...Array.prototype.filter.call(screenTemplates, (it) => {
       return it.classList.contains(element);
     }));
@@ -55,7 +55,7 @@ const renderAppScreen = (screens) => {
   appScreen.appendChild(screens[screenIndex]);
 };
 
-const sortedScreenTemplates = sortScreens(...ORDERED_CLASSES);
+const sortedScreenTemplates = sortScreens(SCREENS_ORDERED_CLASSES);
 
 /**
  * Change screen on alt and arrow (left or right) press
