@@ -3,7 +3,7 @@ import renderScreen from './renderScreen';
 import {attemptsEndedScreenMarkup, attemptsRestartButton} from './attemptsEndedScreen';
 import {winScreenMarkup, winRestartButton} from './winScreen';
 import {timeOutScreenMarkup, timeOutRestartButton} from './timeOutScreen';
-import resultScreenComeOut from './resultScreenComeOut';
+import addResultScreenOutcoming from './resultScreenOutcoming';
 
 const levelGenreScreenMarkup = getHtmlFromTemplate(`<section class="main main--level main--level-genre">
   <svg xmlns="http://www.w3.org/2000/svg" class="timer" viewBox="0 0 780 780">
@@ -101,16 +101,14 @@ const resultScreens = [
 const genreAnswerButton = levelGenreScreenMarkup.querySelector(`.genre-answer-send`);
 const genreAnswerChecks = Array.from(levelGenreScreenMarkup.querySelectorAll(`input[name="answer"]`));
 
+genreAnswerButton.disabled = true;
 
-genreAnswerChecks.forEach((checkbox) => {
-  genreAnswerButton.disabled = true;
-
-  const onCheckboxClick = () => {
-    genreAnswerButton.disabled = !checkbox.checked;
-  };
-
-  checkbox.addEventListener(`click`, onCheckboxClick);
-});
+/**
+ * On checkbox click handler
+ */
+const onCheckboxClick = () => {
+  genreAnswerButton.disabled = !genreAnswerChecks.some((checkbox) => checkbox.checked);
+};
 
 /**
  * Returns random integer between min and max inclusive
@@ -131,11 +129,19 @@ const getRandomArrayItem = (array) => {
   return array[getRandomInteger(0, array.length - 1)];
 };
 
+/**
+ * Render next screen, add its event listeners, remove this screen event listeners
+ */
 const switchScreen = () => {
-  let randomScreen = getRandomArrayItem(resultScreens);
+  const randomScreen = getRandomArrayItem(resultScreens);
+
   renderScreen(randomScreen.markup);
-  resultScreenComeOut(randomScreen.restartButton);
+  addResultScreenOutcoming(randomScreen.restartButton);
+
   genreAnswerButton.removeEventListener(`click`, onGenreAnswerButtonClick);
+  genreAnswerChecks.forEach((checkbox) => {
+    checkbox.removeEventListener(`click`, onCheckboxClick);
+  });
 };
 
 const resetFormChecks = () => {
@@ -152,6 +158,5 @@ const onGenreAnswerButtonClick = (evt) => {
   resetFormChecks();
 };
 
-
-
-export {levelGenreScreenMarkup, genreAnswerButton, onGenreAnswerButtonClick};
+export {levelGenreScreenMarkup, genreAnswerButton, genreAnswerChecks,
+  onGenreAnswerButtonClick, onCheckboxClick};

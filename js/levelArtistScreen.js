@@ -1,6 +1,7 @@
 import getHtmlFromTemplate from './getHtmlFromTemplate';
 import renderScreen from './renderScreen';
-import {levelGenreScreenMarkup, genreAnswerButton, onGenreAnswerButtonClick} from './levelGenreScreen';
+import {levelGenreScreenMarkup, genreAnswerButton, genreAnswerChecks,
+  onGenreAnswerButtonClick, onCheckboxClick} from './levelGenreScreen';
 
 const levelArtistScreenMarkup = getHtmlFromTemplate(`<section class="main main--level main--level-artist">
   <svg xmlns="http://www.w3.org/2000/svg" class="timer" viewBox="0 0 780 780">
@@ -65,17 +66,28 @@ const levelArtistScreenMarkup = getHtmlFromTemplate(`<section class="main main--
 
 const answerRadios = Array.from(levelArtistScreenMarkup.querySelectorAll(`.main-answer-r`));
 
+/**
+ * Render next screen, add its event listeners, remove this screen event listeners
+ */
 const switchScreen = () => {
   renderScreen(levelGenreScreenMarkup);
+
   answerRadios.forEach((elem) => {
     elem.removeEventListener(`click`, onAnswerRadioClick);
   });
+
   genreAnswerButton.addEventListener(`click`, onGenreAnswerButtonClick);
+
+  genreAnswerChecks.forEach((checkbox) => {
+    checkbox.addEventListener(`click`, onCheckboxClick);
+  });
 };
 
+/**
+ * On answer radio click handler
+ */
 const onAnswerRadioClick = () => {
   switchScreen();
 };
-
 
 export {levelArtistScreenMarkup, answerRadios, onAnswerRadioClick};

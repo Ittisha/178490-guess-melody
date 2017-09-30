@@ -1,5 +1,4 @@
 import getHtmlFromTemplate from './getHtmlFromTemplate';
-import resultScreenComeOut from './resultScreenComeOut';
 
 const timeOutScreenMarkup = getHtmlFromTemplate(`<section class="main main--result">
   <section class="logo" title="Угадай мелодию"><h1>Угадай мелодию</h1></section>
@@ -11,7 +10,5 @@ const timeOutScreenMarkup = getHtmlFromTemplate(`<section class="main main--resu
 );
 
 const timeOutRestartButton = timeOutScreenMarkup.querySelector(`.main-replay`);
-
-resultScreenComeOut(timeOutRestartButton);
 
 export {timeOutScreenMarkup, timeOutRestartButton};

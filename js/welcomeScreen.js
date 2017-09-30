@@ -16,6 +16,9 @@ const welcomeScreenMarkup = getHtmlFromTemplate(`<section class="main main--welc
 
 const mainPlayButton = welcomeScreenMarkup.querySelector(`.main-play`);
 
+/**
+ * Render next screen, add its event listeners, remove this screen event listeners
+ */
 const switchScreen = () => {
   renderScreen(levelArtistScreenMarkup);
   mainPlayButton.removeEventListener(`click`, onMainPlayButtonClick);
@@ -24,6 +27,9 @@ const switchScreen = () => {
   });
 };
 
+/**
+ * On main play button click handler
+ */
 const onMainPlayButtonClick = () => {
   switchScreen();
 };
