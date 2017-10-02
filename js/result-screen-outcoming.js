@@ -1,5 +1,5 @@
-import {welcomeScreenMarkup, mainPlayButton, onMainPlayButtonClick} from './welcomeScreen';
-import renderScreen from './renderScreen';
+import {welcomeScreenMarkup, mainPlayButton, onMainPlayButtonClick} from './welcome-screen';
+import renderScreen from './render-screen';
 
 /**
  * Exit result screen, enter welcome screen

@@ -1,7 +1,7 @@
-import getHtmlFromTemplate from './getHtmlFromTemplate';
-import renderScreen from './renderScreen';
+import getHtmlFromTemplate from './get-html-from-template';
+import renderScreen from './render-screen';
 import {levelGenreScreenMarkup, genreAnswerButton, genreAnswerChecks,
-  onGenreAnswerButtonClick, onCheckboxClick} from './levelGenreScreen';
+  onGenreAnswerButtonClick, onCheckboxClick} from './level-genre-screen';
 
 const levelArtistScreenMarkup = getHtmlFromTemplate(`<section class="main main--level main--level-artist">
   <svg xmlns="http://www.w3.org/2000/svg" class="timer" viewBox="0 0 780 780">

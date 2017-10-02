@@ -1,6 +1,6 @@
-import getHtmlFromTemplate from './getHtmlFromTemplate';
-import renderScreen from './renderScreen';
-import {levelArtistScreenMarkup, answerRadios, onAnswerRadioClick} from './levelArtistScreen';
+import getHtmlFromTemplate from './get-html-from-template';
+import renderScreen from './render-screen';
+import {levelArtistScreenMarkup, answerRadios, onAnswerRadioClick} from './level-artist-screen';
 
 const welcomeScreenMarkup = getHtmlFromTemplate(`<section class="main main--welcome">
   <section class="logo" title="Угадай мелодию"><h1>Угадай мелодию</h1></section>

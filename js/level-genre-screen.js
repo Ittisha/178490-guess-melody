@@ -1,9 +1,9 @@
-import getHtmlFromTemplate from './getHtmlFromTemplate';
-import renderScreen from './renderScreen';
-import {attemptsEndedScreenMarkup, attemptsRestartButton} from './attemptsEndedScreen';
-import {winScreenMarkup, winRestartButton} from './winScreen';
-import {timeOutScreenMarkup, timeOutRestartButton} from './timeOutScreen';
-import addResultScreenOutcoming from './resultScreenOutcoming';
+import getHtmlFromTemplate from './get-html-from-template';
+import renderScreen from './render-screen';
+import {attemptsEndedScreenMarkup, attemptsRestartButton} from './attempts-ended-screen';
+import {winScreenMarkup, winRestartButton} from './win-screen';
+import {timeOutScreenMarkup, timeOutRestartButton} from './time-out-screen';
+import addResultScreenOutcoming from './result-screen-outcoming';
 
 const levelGenreScreenMarkup = getHtmlFromTemplate(`<section class="main main--level main--level-genre">
   <svg xmlns="http://www.w3.org/2000/svg" class="timer" viewBox="0 0 780 780">
