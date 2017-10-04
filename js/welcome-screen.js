@@ -1,6 +1,6 @@
 import getHtmlFromTemplate from './get-html-from-template';
 import renderScreen from './render-screen';
-import {levelArtistScreenMarkup, answerRadios, onAnswerRadioClick} from './level-artist-screen';
+import {levelArtistScreenMarkup, artistForm, onAnswerRadioChange} from './level-artist-screen';
 
 const welcomeScreenMarkup = getHtmlFromTemplate(`<section class="main main--welcome">
   <section class="logo" title="Угадай мелодию"><h1>Угадай мелодию</h1></section>
@@ -22,9 +22,8 @@ const mainPlayButton = welcomeScreenMarkup.querySelector(`.main-play`);
 const switchScreen = () => {
   renderScreen(levelArtistScreenMarkup);
   mainPlayButton.removeEventListener(`click`, onMainPlayButtonClick);
-  answerRadios.forEach((elem) => {
-    elem.addEventListener(`click`, onAnswerRadioClick);
-  });
+
+  artistForm.addEventListener(`change`, onAnswerRadioChange);
 };
 
 /**

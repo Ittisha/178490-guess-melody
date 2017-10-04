@@ -1,7 +1,7 @@
 import getHtmlFromTemplate from './get-html-from-template';
 import renderScreen from './render-screen';
-import {levelGenreScreenMarkup, genreAnswerButton, genreAnswerChecks,
-  onGenreAnswerButtonClick, onCheckboxClick} from './level-genre-screen';
+import {levelGenreScreenMarkup, genreAnswerButton, genreForm,
+  onGenreAnswerButtonClick, onCheckboxChange} from './level-genre-screen';
 
 const levelArtistScreenMarkup = getHtmlFromTemplate(`<section class="main main--level main--level-artist">
   <svg xmlns="http://www.w3.org/2000/svg" class="timer" viewBox="0 0 780 780">
@@ -64,30 +64,28 @@ const levelArtistScreenMarkup = getHtmlFromTemplate(`<section class="main main--
 </section>`
 );
 
-const answerRadios = Array.from(levelArtistScreenMarkup.querySelectorAll(`.main-answer-r`));
+const artistForm = levelArtistScreenMarkup.querySelector(`.main-list`);
 
 /**
  * Render next screen, add its event listeners, remove this screen event listeners
  */
 const switchScreen = () => {
   renderScreen(levelGenreScreenMarkup);
-
-  answerRadios.forEach((elem) => {
-    elem.removeEventListener(`click`, onAnswerRadioClick);
-  });
+  artistForm.removeEventListener(`change`, onAnswerRadioChange);
 
   genreAnswerButton.addEventListener(`click`, onGenreAnswerButtonClick);
 
-  genreAnswerChecks.forEach((checkbox) => {
-    checkbox.addEventListener(`click`, onCheckboxClick);
-  });
+  genreForm.addEventListener(`change`, onCheckboxChange);
 };
 
 /**
  * On answer radio click handler
+ * @param {Object} evt
  */
-const onAnswerRadioClick = () => {
-  switchScreen();
+const onAnswerRadioChange = (evt) => {
+  if (evt.target.type === `radio`) {
+    switchScreen();
+  }
 };
 
-export {levelArtistScreenMarkup, answerRadios, onAnswerRadioClick};
+export {levelArtistScreenMarkup, artistForm, onAnswerRadioChange};
