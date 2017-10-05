@@ -99,22 +99,27 @@ const resultScreens = [
 ];
 
 const genreAnswerButton = levelGenreScreenMarkup.querySelector(`.genre-answer-send`);
-const genreAnswerChecks = Array.from(levelGenreScreenMarkup.querySelectorAll(`input[name="answer"]`));
+const genreForm = levelGenreScreenMarkup.querySelector(`.genre`);
+const genreAnswerChecks = Array.from(genreForm.querySelectorAll(`input[name="answer"]`));
+
 
 genreAnswerButton.disabled = true;
 
 /**
  * On checkbox click handler
+ * @param {Object} evt
  */
-const onCheckboxClick = () => {
-  genreAnswerButton.disabled = !genreAnswerChecks.some((checkbox) => checkbox.checked);
+const onCheckboxChange = (evt) => {
+  if (evt.target.type === `checkbox`) {
+    genreAnswerButton.disabled = !genreAnswerChecks.some((checkbox) => checkbox.checked);
+  }
 };
 
 /**
  * Returns random integer between min and max inclusive
  * @param {number} min
  * @param{number} max
- * @return {number}
+ * @return {number} random number between min and max inclusive
  */
 const getRandomInteger = (min, max) => {
   return Math.floor(Math.random() * (max + 1 - min) + min);
@@ -123,7 +128,7 @@ const getRandomInteger = (min, max) => {
 /**
  * Returns random array item
  * @param {Array} array
- * @return {*}
+ * @return {*} random array item
  */
 const getRandomArrayItem = (array) => {
   return array[getRandomInteger(0, array.length - 1)];
@@ -139,9 +144,7 @@ const switchScreen = () => {
   addResultScreenOutcoming(randomScreen.restartButton);
 
   genreAnswerButton.removeEventListener(`click`, onGenreAnswerButtonClick);
-  genreAnswerChecks.forEach((checkbox) => {
-    checkbox.removeEventListener(`click`, onCheckboxClick);
-  });
+  genreForm.removeEventListener(`change`, onCheckboxChange);
 };
 
 const resetFormChecks = () => {
@@ -158,5 +161,5 @@ const onGenreAnswerButtonClick = (evt) => {
   resetFormChecks();
 };
 
-export {levelGenreScreenMarkup, genreAnswerButton, genreAnswerChecks,
-  onGenreAnswerButtonClick, onCheckboxClick};
+export {levelGenreScreenMarkup, genreAnswerButton, genreForm,
+  onGenreAnswerButtonClick, onCheckboxChange};

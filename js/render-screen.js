@@ -1,14 +1,6 @@
-const appScreen = document.querySelector(`.app .main`);
+import {clearNode} from "./utils";
 
-/**
- * Delete node inner content
- * @param {Node} node
- */
-const clearNode = (node) => {
-  while (node.firstChild) {
-    node.removeChild(node.firstChild);
-  }
-};
+const appScreen = document.querySelector(`.app .main`);
 
 const renderScreen = (screen, parentNode = appScreen) => {
   clearNode(parentNode);
