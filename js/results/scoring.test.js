@@ -2,7 +2,7 @@ import assert from 'assert';
 import countUpScores from './scoring';
 
 suite(`Scoring`, () => {
-  test(`Answers number is less than 10`, () => {
+  test(`Should return -1 if answers number is less than 10`, () => {
     const answers = [
       {truthfulness: true, time: 20000},
       {truthfulness: true, time: 10000},
@@ -16,7 +16,7 @@ suite(`Scoring`, () => {
     assert.strictEqual(countUpScores(answers, 3), -1);
   });
 
-  test(`Remaining notes are less than 0`, () => {
+  test(`Should return -1 if remaining notes are less than 0`, () => {
     const answers = [
       {truthfulness: true, time: 30000},
       {truthfulness: false, time: 30000},

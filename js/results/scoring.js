@@ -6,9 +6,9 @@ const SLOW_ANSWER_SCORE = +1;
 
 /**
  * Get score for particular answer
- * @param {number} time - time in milliseconds
- * @param {boolean} truth - is answer true or false
- * @return {number} - score for particular answer
+ * @param {number} time - Time in milliseconds
+ * @param {boolean} truth - Is answer true or false
+ * @return {number} Score for particular answer
  */
 const getAnswerScore = (time, truth) => {
   if (!truth) {
@@ -22,9 +22,9 @@ const getAnswerScore = (time, truth) => {
 
 /**
  * Count up player's score including penalty
- * @param {Array} playerAnswers - array of answer objects
- * @param {number} remainingNotes - number of remaining notes
- * @return {number} player's total score
+ * @param {Array} playerAnswers - Array of answer objects
+ * @param {number} remainingNotes - Number of remaining notes
+ * @return {number} Player's total score
  */
 const countUpScores = (playerAnswers, remainingNotes) => {
   if (playerAnswers.length < ANSWERS_NUMBER || remainingNotes < 0) {
