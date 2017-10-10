@@ -44,7 +44,7 @@ const outputResultMessage = (otherPlayersScores, thisPlayerStats) => {
     const numberOfSmallerScores = getNumberOfSmallerScores(otherPlayersScores,
         thisPlayerStats.score);
 
-    const successPercentage = numberOfSmallerScores / playersNumber * 100;
+    const successPercentage = Math.round(numberOfSmallerScores / playersNumber * 100);
 
     const playerPlace = getPlayerPlace(otherPlayersScores, thisPlayerStats.score);
 

@@ -47,6 +47,21 @@ suite(`Output current player result`, () => {
         expectedOutput);
   });
 
+  test(`Player win, success percentage should  be integer`, () => {
+    const othersPlayersScores = [12, 14];
+
+    const currentPlayerStats = {
+      score: 20,
+      remainingNotes: 3,
+      remainingTime: 50000
+    };
+
+    const expectedOutput = `Вы заняли 1-е место из 3 игроков. Это лучше чем у 67% игроков`;
+
+    assert.strictEqual(outputResultMessage(othersPlayersScores, currentPlayerStats),
+        expectedOutput);
+  });
+
   test(`Player win, someone has the same score, current player place should be higher`, () => {
     const othersPlayersScores = [1, 10, 12, 4, 5];
 
