@@ -1,3 +1,7 @@
+import {getNounPluralForm} from '../utils';
+
+const WORD_PLAYER_FORMS = [`игрока`, `игроков`, `игроков`];
+
 /**
  * Detect if player wins or loses
  * @param {number} playerScore - Current player score number
@@ -48,7 +52,9 @@ const outputResultMessage = (otherPlayersScores, thisPlayerStats) => {
 
     const playerPlace = getPlayerPlace(otherPlayersScores, thisPlayerStats.score);
 
-    return `Вы заняли ${playerPlace}-е место из ${playersNumber} игроков. Это лучше чем у ${successPercentage}% игроков`;
+    const nounPlayerForm = getNounPluralForm(playersNumber, WORD_PLAYER_FORMS);
+
+    return `Вы заняли ${playerPlace}-е место из ${playersNumber} ${nounPlayerForm}. Это лучше чем у ${successPercentage}% игроков`;
   }
 
   if (thisPlayerStats.remainingTime === 0) {

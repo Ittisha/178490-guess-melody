@@ -86,7 +86,7 @@ suite(`Output current player result`, () => {
       remainingTime: 0
     };
 
-    const expectedOutput = `Вы заняли 1-е место из 1 игроков. Это лучше чем у 0% игроков`;
+    const expectedOutput = `Вы заняли 1-е место из 1 игрока. Это лучше чем у 0% игроков`;
 
     assert.strictEqual(outputResultMessage(othersPlayersScores, currentPlayerStats),
         expectedOutput);
