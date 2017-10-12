@@ -8,4 +8,29 @@ const clearNode = (node) => {
   }
 };
 
-export {clearNode};
+/**
+ * Returns index of correct noun form for the array [one, few, many] (e.g. [`день`, `дня`, `дней`])
+ * @param {number} number - Integer
+ * @return {number} Index of correct word form (0 - one, 1 - few, 2- many)
+ */
+const getNounFormIndex = (number) => {
+  if (number % 10 === 1 && number % 100 !== 11) {
+    return 0;
+  }
+  if (number % 10 >= 2 && number % 10 <= 4 && (number % 100 < 12 || number % 100 > 14)) {
+    return 1;
+  }
+  return 2;
+};
+
+/**
+ * Return correct noun plural form for the array [one, few, many] (e.g. [`день`, `дня`, `дней`])
+ * @param {number} number - Integer
+ * @param {Array} nounForms - Array of strings with length = 3 in specified order [one, few, many] (e.g. [`день`, `дня`, `дней`])
+ * @return {string} Correct noun form
+ */
+const getNounPluralForm = (number, nounForms) => {
+  return nounForms[getNounFormIndex(number)];
+};
+
+export {clearNode, getNounPluralForm};
