@@ -33,4 +33,41 @@ const getNounPluralForm = (number, nounForms) => {
   return nounForms[getNounFormIndex(number)];
 };
 
-export {clearNode, getNounPluralForm};
+/**
+ * Returns random integer between min and max inclusive
+ * @param {number} min
+ * @param{number} max
+ * @return {number}
+ */
+const getRandomInteger = (min, max) => Math.floor(Math.random() *
+  (max + 1 - min) + min);
+
+/**
+ * Returns unique random array item
+ * @param {Array} array
+ * @return {*}
+ */
+const getUniqueArrayItem = (array) => array.splice(getRandomInteger(0, array.length - 1), 1)[0];
+
+/**
+ * Returns random array item
+ * @param {Array} array
+ * @return {*}
+ */
+const getRandomArrayItem = (array) => array[getRandomInteger(0, array.length - 1)];
+
+/**
+ * Make copy of an object
+ * @param {Object} object to copy
+ * @return {Object}
+ */
+const copyObject = (object) => Object.assign({}, object);
+
+export {
+  clearNode,
+  getNounPluralForm,
+  getUniqueArrayItem,
+  getRandomArrayItem,
+  getRandomInteger,
+  copyObject
+};

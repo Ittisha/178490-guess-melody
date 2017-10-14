@@ -1,38 +1,56 @@
 import getHtmlFromTemplate from './get-html-from-template';
 import renderScreen from './render-screen';
-import {levelArtistScreenMarkup, artistForm, onAnswerRadioChange} from './level-artist-screen';
+import {initialState} from "./data/data";
+import {copyObject} from "./utils";
+import {games} from "./data/data";
+import {ArtistLevel} from "./data/levels-data-creation";
+import getArtistGame from "./level-artist-screen";
+import {levelGenreScreenMarkup, genreForm, onCheckboxChange} from "./level-genre-screen";
 
-const welcomeScreenMarkup = getHtmlFromTemplate(`<section class="main main--welcome">
-  <section class="logo" title="Угадай мелодию"><h1>Угадай мелодию</h1></section>
-  <button class="main-play">Начать игру</button>
-  <h2 class="title main-title">Правила игры</h2>
-  <p class="text main-text">
-    Правила просты&nbsp;— за&nbsp;5 минут ответить на все вопросы.<br>
-    Ошибиться можно 3 раза.<br>
-    Удачи!
-  </p>
-</section>`
-);
-
-const mainPlayButton = welcomeScreenMarkup.querySelector(`.main-play`);
+const currentState = copyObject(initialState);
 
 /**
  * Render next screen, add its event listeners, remove this screen event listeners
+ * @param {Node} button
  */
-const switchScreen = () => {
-  renderScreen(levelArtistScreenMarkup);
-  mainPlayButton.removeEventListener(`click`, onMainPlayButtonClick);
-
-  artistForm.addEventListener(`change`, onAnswerRadioChange);
+const switchScreen = (button) => {
+  if (games[currentState.questionIndex] instanceof ArtistLevel) {
+    renderScreen(getArtistGame(currentState, games));
+  } else {
+    renderScreen(levelGenreScreenMarkup);
+    genreForm.addEventListener(`change`, onCheckboxChange);
+  }
+  button.removeEventListener(`click`, onMainPlayButtonClick);
 };
 
 /**
  * On main play button click handler
+ * @param {Object} evt
  */
-const onMainPlayButtonClick = () => {
-  switchScreen();
+const onMainPlayButtonClick = (evt) => {
+  if (evt.target.tagName.toLowerCase() === `button`) {
+    switchScreen(evt.target);
+  }
 };
 
-mainPlayButton.addEventListener(`click`, onMainPlayButtonClick);
+const getWelcomeScreenMarkup = (state) => {
+  const welcomeScreen = getHtmlFromTemplate(`<section class="main main--welcome">
+  <section class="logo" title="Угадай мелодию"><h1>Угадай мелодию</h1></section>
+  <button class="main-play">Начать игру</button>
+  <h2 class="title main-title">Правила игры</h2>
+  <p class="text main-text">
+    Правила просты&nbsp;— за&nbsp;${state.timeLeft / 60000} минут ответить на все вопросы.<br>
+    Ошибиться можно ${state.livesLeft} раза.<br>
+    Удачи!
+  </p>
+</section>`);
 
-export {welcomeScreenMarkup, mainPlayButton, onMainPlayButtonClick};
+  const mainPlayButton = welcomeScreen.querySelector(`.main-play`);
+
+  mainPlayButton.addEventListener(`click`, onMainPlayButtonClick);
+
+  return welcomeScreen;
+};
+
+
+export {getWelcomeScreenMarkup, currentState};

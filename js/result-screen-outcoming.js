@@ -1,5 +1,6 @@
-import {welcomeScreenMarkup, mainPlayButton, onMainPlayButtonClick} from './welcome-screen';
+import {getWelcomeScreenMarkup} from './welcome-screen';
 import renderScreen from './render-screen';
+import {initialState} from "./data/data";
 
 /**
  * Exit result screen, enter welcome screen
@@ -7,14 +8,14 @@ import renderScreen from './render-screen';
  */
 const addResultScreenOutcoming = (button) => {
 
-  /**
-   * Render welcome screen, add its event listeners, remove this screen event listeners
-   */
-  const switchScreen = () => {
-    renderScreen(welcomeScreenMarkup);
-    button.removeEventListener(`click`, onRestartButtonClick);
-    mainPlayButton.addEventListener(`click`, onMainPlayButtonClick);
-  };
+  // /**
+  //  * Render welcome screen, add its event listeners, remove this screen event listeners
+  //  */
+  // const switchScreen = () => {
+  //   renderScreen(getWelcomeScreenMarkup(initialState));
+  //   button.removeEventListener(`click`, onRestartButtonClick);
+  //   mainPlayButton.addEventListener(`click`, onMainPlayButtonClick);
+  // };
 
   /**
    * On restart button click handler
@@ -22,7 +23,7 @@ const addResultScreenOutcoming = (button) => {
    */
   const onRestartButtonClick = (evt) => {
     evt.preventDefault();
-    switchScreen();
+    renderScreen(getWelcomeScreenMarkup(initialState));
   };
 
   button.addEventListener(`click`, onRestartButtonClick);
