@@ -1,26 +1,33 @@
 import getHtmlFromTemplate from './get-html-from-template';
 import renderScreen from './render-screen';
-import {levelGenreScreenMarkup, genreForm,
-  onCheckboxChange} from './level-genre-screen';
+import getGenreGame from './level-genre-screen';
 import {currentState} from './welcome-screen';
 import {games} from "./data/data";
 import {ArtistLevel} from "./data/levels-data-creation";
 import getGameHeaderTemplate from './view/game-header';
+import {attemptsEndedScreenMarkup} from './attempts-ended-screen';
+import getWinScreenMarkup from "./win-screen";
 
 /**
  * Render next screen, add its event listeners, remove this screen event listeners
  * @param {Node} radio
  */
 const switchScreen = (radio) => {
-  currentState.determinNextQuestion();
-  if (games[currentState.questionIndex] instanceof ArtistLevel) {
-    renderScreen(getArtistGame(currentState, games));
-
+  if (currentState.lives === -1) {
+    renderScreen(attemptsEndedScreenMarkup);
+  } else if (currentState.questionsLeftNumber === 0) {
+    renderScreen(getWinScreenMarkup(currentState));
   } else {
-    renderScreen(levelGenreScreenMarkup);
-    genreForm.addEventListener(`change`, onCheckboxChange);
+    currentState.determinNextQuestion();
+    if (games[currentState.questionIndex] instanceof ArtistLevel) {
+      renderScreen(getArtistGame(currentState, games));
+
+    } else {
+      renderScreen(getGenreGame(currentState, games));
+    }
   }
-  radio.removeEventListener(`click`, onAnswerRadioChange);
+
+  radio.removeEventListener(`change`, onAnswerRadioChange);
 };
 
 /**
@@ -29,6 +36,13 @@ const switchScreen = (radio) => {
  */
 const onAnswerRadioChange = (evt) => {
   if (evt.target.type === `radio`) {
+    const isRight = evt.target.hasAttribute(`data-isrightanswer`);
+
+    if (!isRight) {
+      currentState.reduceLives();
+    }
+
+    currentState.playersAnswers.push({isRightAnswer: isRight, time: 30000});
     switchScreen(evt.target);
   }
 };
@@ -55,7 +69,7 @@ const getArtistGame = (state, gamesData) => {
 </div>`;
 
   const answers = answerVariants.map((song, index) => `<div class="main-answer-wrapper">
-  <input class="main-answer-r" type="radio" id="answer-${index}" ${song.isRightAnswer ? `data-isRightAnswer` : ``} name="answer" value="val-${index}"/>
+  <input class="main-answer-r" type="radio" id="answer-${index}" ${song.isRightAnswer ? `data-isRightAnswer` : ``} name="answer" value="val-${state.questionIndex + 1}"/>
   <label class="main-answer" for="answer-${index}">
   <img class="main-answer-preview" src="${song.image}"
 alt="${song.artist}" width="134" height="134">
@@ -79,6 +93,7 @@ ${taskContainer}
 
   const containerMarkup = getHtmlFromTemplate(container);
   const artistForm = containerMarkup.querySelector(`.main-list`);
+
   artistForm.addEventListener(`change`, onAnswerRadioChange);
   return containerMarkup;
 };

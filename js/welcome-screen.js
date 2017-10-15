@@ -1,13 +1,14 @@
 import getHtmlFromTemplate from './get-html-from-template';
 import renderScreen from './render-screen';
-import {initialState} from "./data/data";
-import {copyObject} from "./utils";
-import {games} from "./data/data";
-import {ArtistLevel} from "./data/levels-data-creation";
-import getArtistGame from "./level-artist-screen";
-import {levelGenreScreenMarkup, genreForm, onCheckboxChange} from "./level-genre-screen";
+import {initialState} from './data/data';
+import {copyObject} from './utils';
+import {games} from './data/data';
+import {ArtistLevel} from './data/levels-data-creation';
+import getArtistGame from './level-artist-screen';
+import getGenreGame from './level-genre-screen';
 
-const currentState = copyObject(initialState);
+
+let currentState;
 
 /**
  * Render next screen, add its event listeners, remove this screen event listeners
@@ -17,8 +18,7 @@ const switchScreen = (button) => {
   if (games[currentState.questionIndex] instanceof ArtistLevel) {
     renderScreen(getArtistGame(currentState, games));
   } else {
-    renderScreen(levelGenreScreenMarkup);
-    genreForm.addEventListener(`change`, onCheckboxChange);
+    renderScreen(getGenreGame(currentState, games));
   }
   button.removeEventListener(`click`, onMainPlayButtonClick);
 };
@@ -40,7 +40,7 @@ const getWelcomeScreenMarkup = (state) => {
   <h2 class="title main-title">Правила игры</h2>
   <p class="text main-text">
     Правила просты&nbsp;— за&nbsp;${state.timeLeft / 60000} минут ответить на все вопросы.<br>
-    Ошибиться можно ${state.livesLeft} раза.<br>
+    Ошибиться можно ${state.lives} раза.<br>
     Удачи!
   </p>
 </section>`);
@@ -49,6 +49,7 @@ const getWelcomeScreenMarkup = (state) => {
 
   mainPlayButton.addEventListener(`click`, onMainPlayButtonClick);
 
+  currentState = copyObject(initialState);
   return welcomeScreen;
 };
 

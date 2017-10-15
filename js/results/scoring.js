@@ -32,7 +32,7 @@ const countUpScores = (playerAnswers, remainingNotes) => {
   }
 
   return playerAnswers.reduce((score, elem) => {
-    return score + getAnswerScore(elem.time, elem.truthfulness);
+    return score + getAnswerScore(elem.time, elem.isRightAnswer);
   }, 0);
 };
 

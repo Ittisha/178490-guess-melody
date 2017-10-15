@@ -1,4 +1,7 @@
 import getHtmlFromTemplate from './get-html-from-template';
+import {getWelcomeScreenMarkup} from './welcome-screen';
+import renderScreen from './render-screen';
+import {initialState} from "./data/data";
 
 const attemptsEndedScreenMarkup = getHtmlFromTemplate(`<section class="main main--result">
   <section class="logo" title="Угадай мелодию"><h1>Угадай мелодию</h1></section>
@@ -10,5 +13,16 @@ const attemptsEndedScreenMarkup = getHtmlFromTemplate(`<section class="main main
 );
 
 const attemptsRestartButton = attemptsEndedScreenMarkup.querySelector(`.main-replay`);
+/**
+ * On restart button click handler
+ * @param {Object} evt
+ */
+const onRestartButtonClick = (evt) => {
+  evt.preventDefault();
+  renderScreen(getWelcomeScreenMarkup(initialState));
+};
+
+attemptsRestartButton.addEventListener(`click`, onRestartButtonClick);
+
 
 export {attemptsEndedScreenMarkup, attemptsRestartButton};

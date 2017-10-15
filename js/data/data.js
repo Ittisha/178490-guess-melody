@@ -5,12 +5,12 @@ const initialState = Object.freeze({
   questionsLeftNumber: 10,
   questionIndex: 0,
   timeLeft: 300000,
-  livesLeft: 3,
+  lives: 3,
   playersAnswers: [], // каждый ответ {boolen: true/false, time: 20000}
 
   reduceLives() {
-    if (this.livesLeft > 0) {
-      --this.livesLeft;
+    if (this.lives >= 0) {
+      --this.lives;
     }
   },
 

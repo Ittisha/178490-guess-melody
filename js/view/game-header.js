@@ -1,5 +1,6 @@
 const getGameHeaderTemplate = (state) => {
-  const mistakes = new Array(3 - state.livesLeft)
+  const leftLives = state.lives > 0 ? state.lives : 0;
+  const mistakes = new Array(3 - leftLives)
       .fill(`<img class="main-mistake" src="img/wrong-answer.png" width="35" height="49">`)
       .join(``);
 

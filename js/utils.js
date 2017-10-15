@@ -63,11 +63,16 @@ const getRandomArrayItem = (array) => array[getRandomInteger(0, array.length - 1
  */
 const copyObject = (object) => Object.assign({}, object);
 
+const checkGenre = (inputsChecked) => {
+  return inputsChecked.every((input) => input.hasAttribute(`data-isrightanswer`));
+};
+
 export {
   clearNode,
   getNounPluralForm,
   getUniqueArrayItem,
   getRandomArrayItem,
   getRandomInteger,
-  copyObject
+  copyObject,
+  checkGenre
 };
