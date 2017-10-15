@@ -1,34 +1,9 @@
 import getHtmlFromTemplate from './get-html-from-template';
-import renderScreen from './render-screen';
 import {currentState} from './welcome-screen';
 import {games, PlayerAnswer} from './data/data';
-import {ArtistLevel} from './data/levels-data-creation';
 import getGameHeaderTemplate from './view/game-header';
-import getArtistGame from './level-artist-screen';
 import {checkGenre} from './utils';
-import {attemptsEndedScreenMarkup} from './attempts-ended-screen';
-import getWinScreenMarkup from "./win-screen";
-
-/**
- * Render next screen, add its event listeners, remove this screen event listeners
- * @param {Node} button
- */
-const switchScreen = (button) => {
-  if (currentState.lives === -1) {
-    renderScreen(attemptsEndedScreenMarkup);
-  } else if (currentState.questionsLeftNumber === 1) {
-    renderScreen(getWinScreenMarkup(currentState));
-  } else {
-    currentState.determinNextQuestion();
-    if (games[currentState.questionIndex] instanceof ArtistLevel) {
-      renderScreen(getArtistGame(currentState, games));
-    } else {
-      renderScreen(getGenreGame(currentState, games));
-    }
-  }
-
-  button.removeEventListener(`click`, onGenreAnswerButtonClick);
-};
+import switchScreen from './switch-screens';
 
 /**
  * On answer button click handler
@@ -45,7 +20,7 @@ const onGenreAnswerButtonClick = (evt) => {
     }
     currentState.playerAnswers.push(new PlayerAnswer(isRight));
 
-    switchScreen(evt.target);
+    switchScreen(currentState, games, evt.target, onGenreAnswerButtonClick);
   }
 };
 

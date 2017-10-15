@@ -1,34 +1,8 @@
 import getHtmlFromTemplate from './get-html-from-template';
-import renderScreen from './render-screen';
-import getGenreGame from './level-genre-screen';
 import {currentState} from './welcome-screen';
 import {games, PlayerAnswer} from "./data/data";
-import {ArtistLevel} from "./data/levels-data-creation";
 import getGameHeaderTemplate from './view/game-header';
-import {attemptsEndedScreenMarkup} from './attempts-ended-screen';
-import getWinScreenMarkup from "./win-screen";
-
-/**
- * Render next screen, add its event listeners, remove this screen event listeners
- * @param {Node} radio
- */
-const switchScreen = (radio) => {
-  if (currentState.lives === -1) {
-    renderScreen(attemptsEndedScreenMarkup);
-  } else if (currentState.questionsLeftNumber === 0) {
-    renderScreen(getWinScreenMarkup(currentState));
-  } else {
-    currentState.determinNextQuestion();
-    if (games[currentState.questionIndex] instanceof ArtistLevel) {
-      renderScreen(getArtistGame(currentState, games));
-
-    } else {
-      renderScreen(getGenreGame(currentState, games));
-    }
-  }
-
-  radio.removeEventListener(`change`, onAnswerRadioChange);
-};
+import switchScreen from './switch-screens';
 
 /**
  * On answer radio click handler
@@ -43,7 +17,7 @@ const onAnswerRadioChange = (evt) => {
     }
 
     currentState.playerAnswers.push(new PlayerAnswer(isRight));
-    switchScreen(evt.target);
+    switchScreen(currentState, games, evt.target, onAnswerRadioChange);
   }
 };
 

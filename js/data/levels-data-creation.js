@@ -1,5 +1,7 @@
 import {getUniqueArrayItem, getRandomArrayItem, getRandomInteger} from "../utils";
 
+const MIN_ONE_TYPE_LEVEL_NUMBER = 1;
+
 /** Class representing answer variant*/
 class AnswerVariant {
   /**
@@ -136,9 +138,9 @@ class GenreLevel extends Level {
 }
 
 const createGameTasks = (audioData, levelsNumber) => {
-  const artistLevelNunber = getRandomInteger(1, levelsNumber - 1);
+  const artistLevelNumber = getRandomInteger(MIN_ONE_TYPE_LEVEL_NUMBER, levelsNumber - MIN_ONE_TYPE_LEVEL_NUMBER);
 
-  const games = Array.from({length: artistLevelNunber}, () => {
+  const games = Array.from({length: artistLevelNumber}, () => {
     const artistLevel = new ArtistLevel();
     artistLevel.addAnswers(audioData);
     return artistLevel;
