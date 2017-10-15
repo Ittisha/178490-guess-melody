@@ -6,7 +6,7 @@ const initialState = Object.freeze({
   questionIndex: 0,
   timeLeft: 300000,
   lives: 3,
-  playersAnswers: [], // каждый ответ {boolen: true/false, time: 20000}
+  playerAnswers: [],
 
   reduceLives() {
     if (this.lives >= 0) {
@@ -19,14 +19,20 @@ const initialState = Object.freeze({
       --this.questionsLeftNumber;
       ++this.questionIndex;
     }
+  },
+
+  resetPlayerAnswers() {
+    this.playerAnswers = [];
   }
 });
 
 const games = createGameTasks(audios, initialState.questionsLeftNumber);
 
-const playerAnswer = {
-  isRightAnswer: true,
-  time: 30000
-};
+class PlayerAnswer {
+  constructor(boolean, time = 30000) {
+    this.isRightAnswer = boolean;
+    this.time = time;
+  }
+}
 
-export {initialState, games, playerAnswer};
+export {initialState, games, PlayerAnswer};

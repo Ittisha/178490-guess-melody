@@ -1,5 +1,5 @@
 import getHtmlFromTemplate from './get-html-from-template';
-import countUpScores from './results/scoring';
+import {countUpScores, getQuickAnswersScore} from "./results/scoring";
 import {getWelcomeScreenMarkup} from './welcome-screen';
 import renderScreen from './render-screen';
 import {initialState} from "./data/data";
@@ -8,7 +8,9 @@ import stats from './data/statistics';
 import {currentState} from "./welcome-screen";
 
 const getWinScreenMarkup = (state) => {
-  const scores = countUpScores(state.playersAnswers);
+  const playerAnswers = state.playerAnswers;
+  const scores = countUpScores(playerAnswers, currentState.lives);
+  const quickScores = getQuickAnswersScore(playerAnswers);
   const playerStats = {
     score: scores,
     remainingNotes: currentState.lives,
@@ -22,8 +24,8 @@ const getWinScreenMarkup = (state) => {
 
   <h2 class="title">Вы настоящий меломан!</h2>
   <div class="main-stat">За&nbsp;3&nbsp;минуты и 25&nbsp;секунд
-    <br>вы&nbsp;набрали ${scores} баллов (8 быстрых)
-    <br>совершив ${3 - state.lives} ошибки</div>
+    <br>вы&nbsp;набрали ${scores} баллов (${quickScores} быстрых)
+    <br>совершив ${initialState.lives - state.lives} ошибки</div>
   <span class="main-comparison">${resultMessage}</span>
   <span role="button" tabindex="0" class="main-replay">Сыграть ещё раз</span>
 </section>`);
@@ -43,5 +45,6 @@ const getWinScreenMarkup = (state) => {
 
   return winScreenTemplate;
 };
+
 
 export default getWinScreenMarkup;

@@ -1,7 +1,7 @@
 import getHtmlFromTemplate from './get-html-from-template';
 import renderScreen from './render-screen';
 import {currentState} from './welcome-screen';
-import {games} from './data/data';
+import {games, PlayerAnswer} from './data/data';
 import {ArtistLevel} from './data/levels-data-creation';
 import getGameHeaderTemplate from './view/game-header';
 import getArtistGame from './level-artist-screen';
@@ -43,7 +43,7 @@ const onGenreAnswerButtonClick = (evt) => {
     if (!isRight) {
       currentState.reduceLives();
     }
-    currentState.playersAnswers.push({isRightAnswer: isRight, time: 30000});
+    currentState.playerAnswers.push(new PlayerAnswer(isRight));
 
     switchScreen(evt.target);
   }

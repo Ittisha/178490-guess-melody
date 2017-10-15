@@ -50,6 +50,8 @@ const getWelcomeScreenMarkup = (state) => {
   mainPlayButton.addEventListener(`click`, onMainPlayButtonClick);
 
   currentState = copyObject(initialState);
+  currentState.resetPlayerAnswers();
+
   return welcomeScreen;
 };
 
