@@ -1,5 +1,5 @@
 import assert from 'assert';
-import outputResultMessage from './outputting-result';
+import outputResultMessage from '../results/outputting-result';
 
 suite(`Output current player result`, () => {
   test(`Time is over`, () => {

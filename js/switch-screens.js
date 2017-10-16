@@ -1,9 +1,9 @@
-import {ArtistLevel} from './data/levels-data-creation';
+import {ArtistLevel} from './classes/artist-level-class';
 import renderScreen from './render-screen';
-import getArtistGame from './level-artist-screen';
-import {attemptsEndedScreenMarkup} from './attempts-ended-screen';
-import getWinScreenMarkup from "./win-screen";
-import getGenreGame from './level-genre-screen';
+import getArtistGame from './templates/level-artist-screen';
+import {attemptsEndedScreenMarkup} from './templates/attempts-ended-screen';
+import getWinScreenMarkup from "./templates/win-screen";
+import getGenreGame from './templates/level-genre-screen';
 
 /**
  * Render next screen, add its event listeners, remove this screen event listeners

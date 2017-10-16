@@ -1,8 +1,9 @@
-import getHtmlFromTemplate from './get-html-from-template';
+import getHtmlFromTemplate from '../get-html-from-template';
 import {currentState} from './welcome-screen';
-import {games, PlayerAnswer} from "./data/data";
-import getGameHeaderTemplate from './view/game-header';
-import switchScreen from './switch-screens';
+import {games} from "../data/initial-data";
+import getGameHeaderTemplate from '../views/game-header';
+import switchScreen from '../switch-screens';
+import PlayerAnswer from '../classes/player-answer-class';
 
 /**
  * On answer radio click handler

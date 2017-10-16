@@ -1,11 +1,11 @@
-import getHtmlFromTemplate from './get-html-from-template';
-import {countUpScores, getQuickAnswersScore} from "./results/scoring";
+import getHtmlFromTemplate from '../get-html-from-template';
+import {countUpScores, getQuickAnswersScore} from "../results/scoring";
 import {getWelcomeScreenMarkup} from './welcome-screen';
-import renderScreen from './render-screen';
-import {initialState} from "./data/data";
-import outputResultMessage from './results/outputting-result';
-import stats from './data/statistics';
-import {getNounPluralForm} from './utils';
+import renderScreen from '../render-screen';
+import {initialState} from "../data/initial-data";
+import outputResultMessage from '../results/outputting-result';
+import stats from '../data/statistics';
+import {getNounPluralForm} from '../utils';
 
 const WORD_SCORE_PLURALS = [`балл`, `балла`, `баллов`];
 const WORD_FAST_PLURALS = [`быстрый`, `быстрых`, `быстрых`];

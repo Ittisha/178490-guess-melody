@@ -1,5 +1,5 @@
 import assert from 'assert';
-import {countUpScores, getQuickAnswersScore} from './scoring';
+import {countUpScores, getQuickAnswersScore} from '../results/scoring';
 
 suite(`Scoring`, () => {
   test(`Should return -1 if answers number is less than 10`, () => {

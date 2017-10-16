@@ -1,9 +1,9 @@
-import getHtmlFromTemplate from './get-html-from-template';
-import renderScreen from './render-screen';
-import {initialState} from './data/data';
-import Game from './classes/Game';
-import {games} from './data/data';
-import {ArtistLevel} from './data/levels-data-creation';
+import getHtmlFromTemplate from '../get-html-from-template';
+import renderScreen from '../render-screen';
+import {initialState} from '../data/initial-data';
+import Game from '../classes/game-class';
+import {games} from '../data/initial-data';
+import {ArtistLevel} from '../classes/artist-level-class';
 import getArtistGame from './level-artist-screen';
 import getGenreGame from './level-genre-screen';
 

@@ -11,11 +11,4 @@ const initialState = Object.freeze({
 
 const games = createGameTasks(audios, initialState.questionsLeftNumber);
 
-class PlayerAnswer {
-  constructor(boolean, time = 30000) {
-    this.isRightAnswer = boolean;
-    this.time = time;
-  }
-}
-
-export {initialState, games, PlayerAnswer};
+export {initialState, games};

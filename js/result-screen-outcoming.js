@@ -1,6 +1,6 @@
-import {getWelcomeScreenMarkup} from './welcome-screen';
+import {getWelcomeScreenMarkup} from './templates/welcome-screen';
 import renderScreen from './render-screen';
-import {initialState} from "./data/data";
+import {initialState} from "./data/initial-data";
 
 /**
  * Exit result screen, enter welcome screen
