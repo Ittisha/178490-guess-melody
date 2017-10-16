@@ -9,6 +9,7 @@ import switchScreen from './switch-screens';
  * @param {Object} evt
  */
 const onAnswerRadioChange = (evt) => {
+  evt.preventDefault();
   if (evt.target.type === `radio`) {
     const isRight = evt.target.hasAttribute(`data-isrightanswer`);
 
@@ -34,7 +35,7 @@ const getArtistGame = (state, gamesData) => {
   const question = `<h2 class="title main-title">${levelTask.taskMessage}</h2>
 <div class="player-wrapper">
   <div class="player">
-    <audio src="${rightSong.src}" controls></audio>
+    <audio src="${rightSong.src}"></audio>
     <button class="player-control player-control--pause"></button>
     <div class="player-track">
       <span class="player-status"></span>

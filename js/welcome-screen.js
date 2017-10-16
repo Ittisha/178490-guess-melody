@@ -28,12 +28,16 @@ const switchScreen = (button) => {
  * @param {Object} evt
  */
 const onMainPlayButtonClick = (evt) => {
+  evt.preventDefault();
   if (evt.target.tagName.toLowerCase() === `button`) {
     switchScreen(evt.target);
   }
 };
 
 const getWelcomeScreenMarkup = (state) => {
+  currentState = new Game(initialState);
+  currentState.resetPlayerAnswers();
+
   const welcomeScreen = getHtmlFromTemplate(`<section class="main main--welcome">
   <section class="logo" title="Угадай мелодию"><h1>Угадай мелодию</h1></section>
   <button class="main-play">Начать игру</button>
@@ -49,11 +53,7 @@ const getWelcomeScreenMarkup = (state) => {
 
   mainPlayButton.addEventListener(`click`, onMainPlayButtonClick);
 
-  currentState = new Game(initialState);
-  currentState.resetPlayerAnswers();
-
   return welcomeScreen;
 };
-
 
 export {getWelcomeScreenMarkup, currentState};

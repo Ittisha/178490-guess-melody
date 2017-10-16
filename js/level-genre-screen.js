@@ -31,7 +31,7 @@ const getGenreGame = (state, gamesData) => {
   const answers = answerVariantsData.map((song, index) => `<div class="genre-answer">
   <div class="player-wrapper">
     <div class="player">
-      <audio src="${song.src}" controls></audio>
+      <audio src="${song.src}"></audio>
       <button class="player-control player-control--pause"></button>
       <div class="player-track">
         <span class="player-status"></span>
