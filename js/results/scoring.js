@@ -32,8 +32,15 @@ const countUpScores = (playerAnswers, remainingNotes) => {
   }
 
   return playerAnswers.reduce((score, elem) => {
-    return score + getAnswerScore(elem.time, elem.truthfulness);
+    return score + getAnswerScore(elem.time, elem.isRightAnswer);
   }, 0);
 };
 
-export default countUpScores;
+const getQuickAnswersScore = (playerAnswers) => {
+  return playerAnswers.filter((answer) => answer.isRightAnswer && (answer.time < TIME_FOR_QUICK_ANSWER))
+      .reduce((score) => {
+        return score + QUICK_ANSWER_SCORE;
+      }, 0);
+};
+
+export {countUpScores, getQuickAnswersScore};

@@ -1,4 +1,6 @@
-import {welcomeScreenMarkup} from './welcome-screen';
+import {getWelcomeScreenMarkup} from './welcome-screen';
 import renderScreen from './render-screen';
+import {initialState} from './data/data';
 
-renderScreen(welcomeScreenMarkup);
+renderScreen(getWelcomeScreenMarkup(initialState));
+

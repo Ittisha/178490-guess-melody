@@ -1,82 +1,8 @@
 import getHtmlFromTemplate from './get-html-from-template';
-import renderScreen from './render-screen';
-import {levelGenreScreenMarkup, genreAnswerButton, genreForm,
-  onGenreAnswerButtonClick, onCheckboxChange} from './level-genre-screen';
-
-const levelArtistScreenMarkup = getHtmlFromTemplate(`<section class="main main--level main--level-artist">
-  <svg xmlns="http://www.w3.org/2000/svg" class="timer" viewBox="0 0 780 780">
-    <circle
-      cx="390" cy="390" r="370"
-      class="timer-line"
-      style="filter: url(.#blur); transform: rotate(-90deg) scaleY(-1); transform-origin: center"></circle>
-
-    <div class="timer-value" xmlns="http://www.w3.org/1999/xhtml">
-      <span class="timer-value-mins">05</span><!--
-        --><span class="timer-value-dots">:</span><!--
-        --><span class="timer-value-secs">00</span>
-    </div>
-  </svg>
-  <div class="main-mistakes">
-    <img class="main-mistake" src="img/wrong-answer.png" width="35" height="49">
-    <img class="main-mistake" src="img/wrong-answer.png" width="35" height="49">
-  </div>
-
-  <div class="main-wrap">
-    <h2 class="title main-title">Кто исполняет эту песню?</h2>
-    <div class="player-wrapper">
-      <div class="player">
-        <audio></audio>
-        <button class="player-control player-control--pause"></button>
-        <div class="player-track">
-          <span class="player-status"></span>
-        </div>
-      </div>
-    </div>
-    <form class="main-list">
-      <div class="main-answer-wrapper">
-        <input class="main-answer-r" type="radio" id="answer-1" name="answer" value="val-1"/>
-        <label class="main-answer" for="answer-1">
-          <img class="main-answer-preview" src="http://placehold.it/134x134"
-               alt="Пелагея" width="134" height="134">
-          Пелагея
-        </label>
-      </div>
-
-      <div class="main-answer-wrapper">
-        <input class="main-answer-r" type="radio" id="answer-2" name="answer" value="val-2"/>
-        <label class="main-answer" for="answer-2">
-          <img class="main-answer-preview" src="http://placehold.it/134x134"
-               alt="Краснознаменная дивизия имени моей бабушки" width="134" height="134">
-          Краснознаменная дивизия имени моей бабушки
-        </label>
-      </div>
-
-      <div class="main-answer-wrapper">
-        <input class="main-answer-r" type="radio" id="answer-3" name="answer" value="val-3"/>
-        <label class="main-answer" for="answer-3">
-          <img class="main-answer-preview" src="http://placehold.it/134x134"
-               alt="Lorde" width="134" height="134">
-          Lorde
-        </label>
-      </div>
-    </form>
-  </div>
-</section>`
-);
-
-const artistForm = levelArtistScreenMarkup.querySelector(`.main-list`);
-
-/**
- * Render next screen, add its event listeners, remove this screen event listeners
- */
-const switchScreen = () => {
-  renderScreen(levelGenreScreenMarkup);
-  artistForm.removeEventListener(`change`, onAnswerRadioChange);
-
-  genreAnswerButton.addEventListener(`click`, onGenreAnswerButtonClick);
-
-  genreForm.addEventListener(`change`, onCheckboxChange);
-};
+import {currentState} from './welcome-screen';
+import {games, PlayerAnswer} from "./data/data";
+import getGameHeaderTemplate from './view/game-header';
+import switchScreen from './switch-screens';
 
 /**
  * On answer radio click handler
@@ -84,8 +10,66 @@ const switchScreen = () => {
  */
 const onAnswerRadioChange = (evt) => {
   if (evt.target.type === `radio`) {
-    switchScreen();
+    const isRight = evt.target.hasAttribute(`data-isrightanswer`);
+
+    if (!isRight) {
+      currentState.reduceLives();
+    }
+
+    currentState.playerAnswers.push(new PlayerAnswer(isRight));
+    switchScreen(currentState, games, evt.target, onAnswerRadioChange);
   }
 };
 
-export {levelArtistScreenMarkup, artistForm, onAnswerRadioChange};
+
+const findRightSong = (songs) => {
+  return songs.find((it) => it.isRightAnswer === true);
+};
+
+const getArtistGame = (state, gamesData) => {
+  const levelTask = gamesData[state.questionIndex];
+  const answerVariants = [...levelTask.answers];
+  const rightSong = findRightSong(answerVariants);
+
+  const question = `<h2 class="title main-title">${levelTask.taskMessage}</h2>
+<div class="player-wrapper">
+  <div class="player">
+    <audio src="${rightSong.src}" controls></audio>
+    <button class="player-control player-control--pause"></button>
+    <div class="player-track">
+      <span class="player-status"></span>
+    </div>
+  </div>
+</div>`;
+
+  const answers = answerVariants.map((song, index) => `<div class="main-answer-wrapper">
+  <input class="main-answer-r" type="radio" id="answer-${index}" ${song.isRightAnswer ? `data-isRightAnswer` : ``} name="answer" value="val-${state.questionIndex + 1}"/>
+  <label class="main-answer" for="answer-${index}">
+  <img class="main-answer-preview" src="${song.image}"
+alt="${song.artist}" width="134" height="134">
+  ${song.artist}
+  </label>
+</div>`).join(``);
+
+  const answersForm = `<form class="main-list">
+${answers}
+ </form>`;
+
+  const taskContainer = `<div class="main-wrap">
+${question}
+${answersForm}
+</div>`;
+
+  const container = `<section class="main main--level main--level-artist">
+${getGameHeaderTemplate(state)}
+${taskContainer}
+</section>`;
+
+  const containerMarkup = getHtmlFromTemplate(container);
+  const artistForm = containerMarkup.querySelector(`.main-list`);
+
+  artistForm.addEventListener(`change`, onAnswerRadioChange);
+  return containerMarkup;
+};
+
+export default getArtistGame;
