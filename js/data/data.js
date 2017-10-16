@@ -7,23 +7,6 @@ const initialState = Object.freeze({
   timeLeft: 300000,
   lives: 3,
   playerAnswers: [],
-
-  reduceLives() {
-    if (this.lives >= 0) {
-      --this.lives;
-    }
-  },
-
-  determinNextQuestion() {
-    if (this.questionsLeftNumber > 0) {
-      --this.questionsLeftNumber;
-      ++this.questionIndex;
-    }
-  },
-
-  resetPlayerAnswers() {
-    this.playerAnswers = [];
-  }
 });
 
 const games = createGameTasks(audios, initialState.questionsLeftNumber);

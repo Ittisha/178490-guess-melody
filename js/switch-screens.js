@@ -18,7 +18,7 @@ const switchScreen = (state, levels, button, cb) => {
   } else if (state.questionsLeftNumber === 1) {
     renderScreen(getWinScreenMarkup(state));
   } else {
-    state.determinNextQuestion();
+    state.determineNextQuestion();
     if (levels[state.questionIndex] instanceof ArtistLevel) {
       renderScreen(getArtistGame(state, levels));
     } else {

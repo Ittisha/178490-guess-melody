@@ -1,7 +1,7 @@
 import getHtmlFromTemplate from './get-html-from-template';
 import renderScreen from './render-screen';
 import {initialState} from './data/data';
-import {copyObject} from './utils';
+import Game from './classes/Game';
 import {games} from './data/data';
 import {ArtistLevel} from './data/levels-data-creation';
 import getArtistGame from './level-artist-screen';
@@ -49,7 +49,7 @@ const getWelcomeScreenMarkup = (state) => {
 
   mainPlayButton.addEventListener(`click`, onMainPlayButtonClick);
 
-  currentState = copyObject(initialState);
+  currentState = new Game(initialState);
   currentState.resetPlayerAnswers();
 
   return welcomeScreen;
