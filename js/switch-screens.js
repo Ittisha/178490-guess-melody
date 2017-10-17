@@ -1,5 +1,5 @@
 import {ArtistLevel} from './classes/artist-level-class';
-import renderScreen from './render-screen';
+import {renderScreen} from './render-screen';
 import getArtistGame from './templates/level-artist-screen';
 import {attemptsEndedScreenMarkup} from './templates/attempts-ended-screen';
 import getWinScreenMarkup from "./templates/win-screen";

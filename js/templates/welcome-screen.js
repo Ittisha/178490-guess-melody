@@ -1,59 +1,38 @@
-import getHtmlFromTemplate from '../get-html-from-template';
-import renderScreen from '../render-screen';
+import {renderScreen} from '../render-screen';
 import {initialState} from '../data/initial-data';
 import Game from '../classes/game-class';
 import {games} from '../data/initial-data';
 import {ArtistLevel} from '../classes/artist-level-class';
 import getArtistGame from './level-artist-screen';
 import getGenreGame from './level-genre-screen';
+import WelcomeView from '../views/welcome-view';
 
 
 let currentState;
 
 /**
  * Render next screen, add its event listeners, remove this screen event listeners
- * @param {Node} button
  */
-const switchScreen = (button) => {
+const switchScreen = () => {
   if (games[currentState.questionIndex] instanceof ArtistLevel) {
     renderScreen(getArtistGame(currentState, games));
   } else {
     renderScreen(getGenreGame(currentState, games));
   }
-  button.removeEventListener(`click`, onMainPlayButtonClick);
 };
 
-/**
- * On main play button click handler
- * @param {Object} evt
- */
-const onMainPlayButtonClick = (evt) => {
-  evt.preventDefault();
-  if (evt.target.tagName.toLowerCase() === `button`) {
-    switchScreen(evt.target);
-  }
-};
 
-const getWelcomeScreenMarkup = (state) => {
+const showWelcome = () => {
   currentState = new Game(initialState);
   currentState.resetPlayerAnswers();
 
-  const welcomeScreen = getHtmlFromTemplate(`<section class="main main--welcome">
-  <section class="logo" title="Угадай мелодию"><h1>Угадай мелодию</h1></section>
-  <button class="main-play">Начать игру</button>
-  <h2 class="title main-title">Правила игры</h2>
-  <p class="text main-text">
-    Правила просты&nbsp;— за&nbsp;${state.timeLeft / 60000} минут ответить на все вопросы.<br>
-    Ошибиться можно ${state.lives} раза.<br>
-    Удачи!
-  </p>
-</section>`);
+  const welcome = new WelcomeView();
+  welcome.onStart = () => {
+    switchScreen();
+  };
 
-  const mainPlayButton = welcomeScreen.querySelector(`.main-play`);
-
-  mainPlayButton.addEventListener(`click`, onMainPlayButtonClick);
-
-  return welcomeScreen;
+  return welcome;
 };
 
-export {getWelcomeScreenMarkup, currentState};
+
+export {showWelcome, currentState};

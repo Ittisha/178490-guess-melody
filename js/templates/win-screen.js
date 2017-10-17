@@ -1,7 +1,7 @@
 import getHtmlFromTemplate from '../get-html-from-template';
 import {countUpScores, getQuickAnswersScore} from "../results/scoring";
-import {getWelcomeScreenMarkup} from './welcome-screen';
-import renderScreen from '../render-screen';
+import {showWelcome} from './welcome-screen';
+import {renderScreen, changeView} from "../render-screen";
 import {initialState} from "../data/initial-data";
 import outputResultMessage from '../results/outputting-result';
 import stats from '../data/statistics';
@@ -50,7 +50,7 @@ const getWinScreenMarkup = (state) => {
    */
   const onRestartButtonClick = (evt) => {
     evt.preventDefault();
-    renderScreen(getWelcomeScreenMarkup(initialState));
+    changeView(showWelcome());
     winRestartButton.removeEventListener(`click`, onRestartButtonClick);
   };
 

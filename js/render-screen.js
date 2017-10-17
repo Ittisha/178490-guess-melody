@@ -7,4 +7,8 @@ const renderScreen = (screen, parentNode = appScreen) => {
   parentNode.appendChild(screen);
 };
 
-export default renderScreen;
+const changeView = (view, parentNode = appScreen) => {
+  clearNode(parentNode);
+  parentNode.appendChild(view.element);
+};
+export {renderScreen, changeView};
