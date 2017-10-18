@@ -3,7 +3,7 @@ import {renderScreen, changeView} from './render-screen';
 import showArtistLevel from './templates/level-artist-screen';
 import {attemptsEndedScreenMarkup} from './templates/attempts-ended-screen';
 import getWinScreenMarkup from "./templates/win-screen";
-import getGenreGame from './templates/level-genre-screen';
+import showGenreLevel from './templates/level-genre-screen';
 
 /**
  * Render next screen, add its event listeners, remove this screen event listeners
@@ -20,7 +20,7 @@ const switchScreen = (state, levels) => {
     if (levels[state.questionIndex] instanceof ArtistLevel) {
       changeView(showArtistLevel());
     } else {
-      renderScreen(getGenreGame(state, levels));
+      changeView(showGenreLevel());
     }
   }
 

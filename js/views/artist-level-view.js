@@ -17,6 +17,10 @@ class ArtistLevelView extends AbstractView {
     this.gamesData = gamesData;
   }
 
+  /**
+   * Method for getting string template
+   * @return {string} - String template for html-markup
+   */
   get template() {
     const levelTask = this.state.getQuestion(this.gamesData);
     const answerVariants = [...levelTask.answers];
@@ -53,6 +57,9 @@ ${getGameHeaderTemplate(this.state)}
 </section>`;
   }
 
+  /**
+   * Bind callback to form change
+   */
   bind() {
     const artistForm = this.element.querySelector(`.main-list`);
 

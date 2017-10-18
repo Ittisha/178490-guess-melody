@@ -21,7 +21,7 @@ style="filter: url(.#blur); transform: rotate(-90deg) scaleY(-1); transform-orig
 </svg>
 <div class="main-mistakes">
   ${mistakes}
-</div>`;
+</div>`.trim();
 
   return headerTemplate;
 };
