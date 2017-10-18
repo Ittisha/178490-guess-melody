@@ -2,7 +2,7 @@ import {ArtistLevel} from './classes/artist-level-class';
 import {renderScreen, changeView} from './render-screen';
 import showArtistLevel from './templates/level-artist-screen';
 import {attemptsEndedScreenMarkup} from './templates/attempts-ended-screen';
-import getWinScreenMarkup from "./templates/win-screen";
+import showWinScreen from "./templates/win-screen";
 import showGenreLevel from './templates/level-genre-screen';
 
 /**
@@ -14,7 +14,7 @@ const switchScreen = (state, levels) => {
   if (state.lives < 0) {
     renderScreen(attemptsEndedScreenMarkup);
   } else if (state.questionsLeftNumber === 1) {
-    renderScreen(getWinScreenMarkup(state));
+    changeView(showWinScreen());
   } else {
     state.determineNextQuestion();
     if (levels[state.questionIndex] instanceof ArtistLevel) {

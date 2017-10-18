@@ -7,7 +7,7 @@ suite(`Output current player result`, () => {
 
     const currentPlayerStats = {
       score: -1,
-      remainingNotes: 3,
+      remainingLives: 3,
       remainingTime: 0
     };
 
@@ -22,7 +22,7 @@ suite(`Output current player result`, () => {
 
     const currentPlayerStats = {
       score: -1,
-      remainingNotes: 0,
+      remainingLives: 0,
       remainingTime: 50000
     };
 
@@ -37,7 +37,7 @@ suite(`Output current player result`, () => {
 
     const currentPlayerStats = {
       score: 7,
-      remainingNotes: 2,
+      remainingLives: 2,
       remainingTime: 0
     };
 
@@ -52,7 +52,7 @@ suite(`Output current player result`, () => {
 
     const currentPlayerStats = {
       score: 20,
-      remainingNotes: 3,
+      remainingLives: 3,
       remainingTime: 50000
     };
 
@@ -67,7 +67,7 @@ suite(`Output current player result`, () => {
 
     const currentPlayerStats = {
       score: 10,
-      remainingNotes: 3,
+      remainingLives: 3,
       remainingTime: 0
     };
 
@@ -82,7 +82,7 @@ suite(`Output current player result`, () => {
 
     const currentPlayerStats = {
       score: 10,
-      remainingNotes: 3,
+      remainingLives: 3,
       remainingTime: 0
     };
 
