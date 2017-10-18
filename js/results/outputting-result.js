@@ -61,7 +61,7 @@ const outputResultMessage = (otherPlayersScores, thisPlayerStats) => {
     return `Время вышло! Вы не успели отгадать все мелодии`;
   }
 
-  return `У вас закончились все попытки. Ничего, повезёт в следующий раз!`;
+  return `У вас закончились все попытки. <br> Ничего, повезёт в следующий раз!`;
 };
 
 export default outputResultMessage;

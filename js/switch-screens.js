@@ -1,7 +1,7 @@
 import {ArtistLevel} from './classes/artist-level-class';
-import {renderScreen, changeView} from './render-screen';
+import {changeView} from './render-screen';
 import showArtistLevel from './templates/level-artist-screen';
-import {attemptsEndedScreenMarkup} from './templates/attempts-ended-screen';
+import showLossScreen from './templates/attempts-ended-screen';
 import showWinScreen from "./templates/win-screen";
 import showGenreLevel from './templates/level-genre-screen';
 
@@ -12,7 +12,7 @@ import showGenreLevel from './templates/level-genre-screen';
  */
 const switchScreen = (state, levels) => {
   if (state.lives < 0) {
-    renderScreen(attemptsEndedScreenMarkup);
+    changeView(showLossScreen());
   } else if (state.questionsLeftNumber === 1) {
     changeView(showWinScreen());
   } else {

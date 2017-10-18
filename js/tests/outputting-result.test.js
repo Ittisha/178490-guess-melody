@@ -26,7 +26,7 @@ suite(`Output current player result`, () => {
       remainingTime: 50000
     };
 
-    const expectedOutput = `У вас закончились все попытки. Ничего, повезёт в следующий раз!`;
+    const expectedOutput = `У вас закончились все попытки. <br> Ничего, повезёт в следующий раз!`;
 
     assert.strictEqual(outputResultMessage(othersPlayersScores, currentPlayerStats),
         expectedOutput);

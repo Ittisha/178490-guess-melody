@@ -1,27 +1,29 @@
-import getHtmlFromTemplate from '../get-html-from-template';
-import {showWelcome} from './welcome-screen';
+import statistics from '../data/statistics';
+import {currentState, showWelcome} from './welcome-screen';
 import {changeView} from '../render-screen';
+import LossView from '../views/loss-screen-view';
+import {getLossMessages} from "../results/get-result-data";
+import {countUpScores} from "../results/scoring";
+import {getQuickAnswersScore} from "../results/scoring";
 
-const attemptsEndedScreenMarkup = getHtmlFromTemplate(`<section class="main main--result">
-  <section class="logo" title="Угадай мелодию"><h1>Угадай мелодию</h1></section>
+const createLossScreen = (result) => {
+  const lossScreen = new LossView(result);
 
-  <h2 class="title">Какая жалость!</h2>
-  <div class="main-stat">У вас закончились все попытки.<br>Ничего, повезёт в следующий раз!</div>
-  <span role="button" tabindex="0" class="main-replay">Попробовать ещё раз</span>
-</section>`
-);
+  lossScreen.onReplay = (evt) => {
+    evt.preventDefault();
+    changeView(showWelcome());
+  };
 
-const attemptsRestartButton = attemptsEndedScreenMarkup.querySelector(`.main-replay`);
-/**
- * On restart button click handler
- * @param {Object} evt
- */
-const onRestartButtonClick = (evt) => {
-  evt.preventDefault();
-  changeView(showWelcome());
+  return lossScreen;
 };
 
-attemptsRestartButton.addEventListener(`click`, onRestartButtonClick);
+const getPlayerResult = (state) => ({
+  score: countUpScores(state.playerAnswers, state.lives),
+  remainingLives: state.lives,
+  remainingTime: state.timeLeft,
+  quickScores: getQuickAnswersScore(state.playerAnswers)
+});
 
+const showLossScreen = () => createLossScreen(getLossMessages(statistics, getPlayerResult(currentState)));
+export default showLossScreen;
 
-export {attemptsEndedScreenMarkup, attemptsRestartButton};
