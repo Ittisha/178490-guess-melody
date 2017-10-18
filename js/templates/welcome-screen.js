@@ -3,10 +3,10 @@ import {initialState} from '../data/initial-data';
 import Game from '../classes/game-class';
 import {games} from '../data/initial-data';
 import {ArtistLevel} from '../classes/artist-level-class';
-import getArtistGame from './level-artist-screen';
 import getGenreGame from './level-genre-screen';
 import WelcomeView from '../views/welcome-view';
-
+import showArtistLevel from './level-artist-screen';
+import {changeView} from '../render-screen';
 
 let currentState;
 
@@ -15,7 +15,7 @@ let currentState;
  */
 const switchScreen = () => {
   if (games[currentState.questionIndex] instanceof ArtistLevel) {
-    renderScreen(getArtistGame(currentState, games));
+    changeView(showArtistLevel());
   } else {
     renderScreen(getGenreGame(currentState, games));
   }

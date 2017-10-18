@@ -39,6 +39,14 @@ class Game {
     this.playerAnswers = [];
   }
 
+  /**
+   * Return current question data
+   * @param {Array} data
+   * @return {Object}
+   */
+  getQuestion(data) {
+    return data[this.questionIndex];
+  }
 }
 
 export default Game;

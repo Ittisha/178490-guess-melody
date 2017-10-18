@@ -1,8 +1,15 @@
 import AbstractView from './abstract-view';
 import {initialState} from "../data/initial-data";
 
+/** Class representing welcome view
+ * @extends AbstractView
+ */
 class WelcomeView extends AbstractView {
 
+  /**
+   * Method for getting string template
+   * @return {string} - String template for html-markup
+   */
   get template() {
     return `<section class="main main--welcome">
   <section class="logo" title="Угадай мелодию"><h1>Угадай мелодию</h1></section>
@@ -16,6 +23,9 @@ class WelcomeView extends AbstractView {
 </section>`.trim();
   }
 
+  /**
+   * Bind callback to button click
+   */
   bind() {
     const playButton = this.element.querySelector(`.main-play`);
     const onPlayButtonClick = () => {

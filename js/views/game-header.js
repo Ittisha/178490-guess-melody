@@ -1,6 +1,8 @@
+import {initialState} from "../data/initial-data";
+
 const getGameHeaderTemplate = (state) => {
   const leftLives = state.lives > 0 ? state.lives : 0;
-  const mistakes = new Array(3 - leftLives)
+  const mistakes = new Array(initialState.lives - leftLives)
       .fill(`<img class="main-mistake" src="img/wrong-answer.png" width="35" height="49">`)
       .join(``);
 
@@ -15,6 +17,7 @@ style="filter: url(.#blur); transform: rotate(-90deg) scaleY(-1); transform-orig
 --><span class="timer-value-dots">:</span><!--
 --><span class="timer-value-secs">00</span>
 </div>
+
 </svg>
 <div class="main-mistakes">
   ${mistakes}

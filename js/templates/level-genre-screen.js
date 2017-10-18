@@ -2,7 +2,7 @@ import getHtmlFromTemplate from '../get-html-from-template';
 import {currentState} from './welcome-screen';
 import {games} from '../data/initial-data';
 import getGameHeaderTemplate from '../views/game-header';
-import {checkGenre} from '../utils';
+import {isRightGenreChecked} from '../utils';
 import switchScreen from '../switch-screens';
 import PlayerAnswer from '../classes/player-answer-class';
 
@@ -14,14 +14,14 @@ const onGenreAnswerButtonClick = (evt) => {
   evt.preventDefault();
   if (evt.target.tagName.toLowerCase() === `button`) {
     const checkedChecks = Array.from(evt.target.parentNode.querySelectorAll(`input[type="checkbox"]:checked`));
-    const isRight = checkGenre(checkedChecks);
+    const isRight = isRightGenreChecked(checkedChecks);
 
     if (!isRight) {
       currentState.reduceLives();
     }
     currentState.playerAnswers.push(new PlayerAnswer(isRight));
 
-    switchScreen(currentState, games, evt.target, onGenreAnswerButtonClick);
+    switchScreen(currentState, games);
   }
 };
 

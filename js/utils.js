@@ -84,14 +84,21 @@ const getUniqueArrayItem = (array) => array.splice(getRandomInteger(0, array.len
 const getRandomArrayItem = (array) => array[getRandomInteger(0, array.length - 1)];
 
 /**
- * Make copy of an object
- * @param {Object} object to copy
+ * Check if all right answers are chosen
+ * @param {Array} inputsChecked
+ * @return {boolean}
+ */
+const isRightGenreChecked = (inputsChecked) => {
+  return inputsChecked.every((input) => input.hasAttribute(`data-isrightanswer`));
+};
+
+/**
+ * Find the right song
+ * @param {Array} songs
  * @return {Object}
  */
-const copyObject = (object) => Object.assign({}, object);
-
-const checkGenre = (inputsChecked) => {
-  return inputsChecked.every((input) => input.hasAttribute(`data-isrightanswer`));
+const findRightSong = (songs) => {
+  return songs.find((it) => it.isRightAnswer === true);
 };
 
 export {
@@ -100,6 +107,6 @@ export {
   getUniqueArrayItem,
   getRandomArrayItem,
   getRandomInteger,
-  copyObject,
-  checkGenre
+  findRightSong,
+  isRightGenreChecked
 };
