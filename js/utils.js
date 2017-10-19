@@ -109,16 +109,7 @@ const formatTime = (milliseconds) => ({
   seconds: milliseconds % MILLISECONDS_IN_ONE_MINUTE / MILLISECONDS_IN_ONE_SECOND
 });
 
-const formatTimeForViews = (milliseconds) => {
-
-  const minutes = formatTime(milliseconds).minutes;
-  const seconds = formatTime(milliseconds).seconds;
-
-  return {
-    minutes: minutes < 10 ? `0${minutes}` : `${minutes}`,
-    seconds: seconds < 10 ? `0${seconds}` : `${seconds}`
-  };
-};
+const addZeroInFront = (value) => value < 10 ? `0${value}` : `${value}`;
 
 export {
   clearNode,
@@ -128,6 +119,6 @@ export {
   getRandomInteger,
   findRightSong,
   isRightGenreChecked,
-  formatTimeForViews,
+  addZeroInFront,
   formatTime
 };

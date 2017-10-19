@@ -1,7 +1,7 @@
 import AbstractView from './abstract-view';
 import getGameHeaderTemplate from '../views/game-header';
-import {findRightSong} from "../utils";
-import {formatTimeForViews} from "../utils";
+import {findRightSong, formatTime} from "../utils";
+import {addZeroInFront} from "../utils";
 
 /** Class representing artist level view
  * @extends AbstractView
@@ -100,8 +100,10 @@ ${getGameHeaderTemplate(this.state)}
   }
 
   updateTime(time) {
-    this.timeMinutes.textContent = formatTimeForViews(time).minutes;
-    this.timeSeconds.textContent = formatTimeForViews(time).seconds;
+    const {minutes, seconds} = formatTime(time);
+
+    this.timeMinutes.textContent = addZeroInFront(minutes);
+    this.timeSeconds.textContent = addZeroInFront(seconds);
   }
 
 }
