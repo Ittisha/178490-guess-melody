@@ -67,12 +67,30 @@ ${getGameHeaderTemplate(this.state)}
     this.timeMinutes = answerContainer.querySelector(`.timer-value-mins`);
     const artistForm = answerContainer.querySelector(`.main-list`);
 
+    const audioPlayer = this.element.querySelector(`.player audio`);
+    const playerButton = this.element.querySelector(`.player .player-control`);
+
     const onArtistFormChange = (evt) => {
       this.onAnswer(evt);
       artistForm.removeEventListener(`change`, onArtistFormChange);
+      playerButton.removeEventListener(`click`, onPlayerButtonCLick);
     };
 
     artistForm.addEventListener(`change`, onArtistFormChange);
+
+    const onPlayerButtonCLick = (evt) => {
+      evt.preventDefault();
+      const button = evt.target;
+      button.classList.toggle(`player-control--pause`);
+      button.classList.toggle(`player-control--play`);
+      if (audioPlayer.paused) {
+        audioPlayer.play();
+      } else {
+        audioPlayer.pause();
+      }
+    };
+
+    playerButton.addEventListener(`click`, onPlayerButtonCLick);
   }
 
   onAnswer(evt) {
