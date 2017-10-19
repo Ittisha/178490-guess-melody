@@ -67,6 +67,25 @@ ${task}
     const genreForm = answerContainer.querySelector(`.genre`);
     const genreAnswerChecks = Array.from(genreForm.querySelectorAll(`input[name="answer"]`));
 
+    const onGenreFormClick = (evt) => {
+
+      const button = evt.target;
+      if (button.classList.contains(`player-control`)) {
+        evt.preventDefault();
+
+        const playerContainer = button.parentNode;
+        const audioPlayer = playerContainer.querySelector(`audio`);
+
+        button.classList.toggle(`player-control--pause`);
+        button.classList.toggle(`player-control--play`);
+        if (audioPlayer.paused) {
+          audioPlayer.play();
+        } else {
+          audioPlayer.pause();
+        }
+      }
+    };
+
     /**
      * On checkbox click handler
      * @param {Object} evt
@@ -82,8 +101,11 @@ ${task}
       this.onAnswer(evt);
       genreAnswerButton.removeEventListener(`click`, onGenreAnswerButtonClick);
       genreForm.removeEventListener(`change`, onCheckboxChange);
+      genreForm.removeEventListener(`click`, onGenreFormClick);
     };
+
     genreForm.addEventListener(`change`, onCheckboxChange);
+    genreForm.addEventListener(`click`, onGenreFormClick);
     genreAnswerButton.addEventListener(`click`, onGenreAnswerButtonClick);
 
   }

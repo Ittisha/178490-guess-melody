@@ -81,8 +81,10 @@ ${getGameHeaderTemplate(this.state)}
     const onPlayerButtonCLick = (evt) => {
       evt.preventDefault();
       const button = evt.target;
+
       button.classList.toggle(`player-control--pause`);
       button.classList.toggle(`player-control--play`);
+
       if (audioPlayer.paused) {
         audioPlayer.play();
       } else {
