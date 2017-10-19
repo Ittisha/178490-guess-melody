@@ -57,11 +57,11 @@ const outputResultMessage = (otherPlayersScores, thisPlayerStats) => {
     return `Вы заняли ${playerPlace}-е место из ${playersNumber} ${nounPlayerForm}. Это лучше чем у ${successPercentage}% игроков`;
   }
 
-  if (thisPlayerStats.remainingTime === 0) {
-    return `Время вышло! Вы не успели отгадать все мелодии`;
+  if (thisPlayerStats.remainingTime === -1) {
+    return `Время вышло!<br>Вы не успели отгадать все мелодии`;
   }
 
-  return `У вас закончились все попытки. <br> Ничего, повезёт в следующий раз!`;
+  return `У вас закончились все попытки.<br>Ничего, повезёт в следующий раз!`;
 };
 
 export default outputResultMessage;

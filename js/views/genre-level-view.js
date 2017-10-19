@@ -1,5 +1,6 @@
 import AbstractView from './abstract-view';
 import getGameHeaderTemplate from '../views/game-header';
+import {formatTimeForViews} from "../utils";
 
 /** Class representing artist level view
  * @extends AbstractView
@@ -58,6 +59,8 @@ ${task}
    */
   bind() {
     const answerContainer = this.element;
+    this.timeSeconds = answerContainer.querySelector(`.timer-value-secs`);
+    this.timeMinutes = answerContainer.querySelector(`.timer-value-mins`);
     const genreAnswerButton = answerContainer.querySelector(`.genre-answer-send`);
     genreAnswerButton.disabled = true;
 
@@ -87,6 +90,11 @@ ${task}
 
   onAnswer(evt) {
     return evt;
+  }
+
+  updateTime(time) {
+    this.timeMinutes.textContent = formatTimeForViews(time).minutes;
+    this.timeSeconds.textContent = formatTimeForViews(time).seconds;
   }
 }
 

@@ -17,7 +17,8 @@ class Timer {
       return -1;
     }
 
-    return --this.time;
+    this.time -= 1000;
+    return this.time;
   }
 }
 

@@ -1,3 +1,6 @@
+const SECONDS_IN_ONE_MINUTE = 60;
+const MILLISECONDS_IN_ONE_SECOND = 1000;
+const MILLISECONDS_IN_ONE_MINUTE = SECONDS_IN_ONE_MINUTE * MILLISECONDS_IN_ONE_SECOND;
 /**
  * Enum for russian words plural forms rule
  * @readonly
@@ -101,6 +104,22 @@ const findRightSong = (songs) => {
   return songs.find((it) => it.isRightAnswer === true);
 };
 
+const formatTime = (milliseconds) => ({
+  minutes: Math.floor(milliseconds / MILLISECONDS_IN_ONE_MINUTE),
+  seconds: milliseconds % MILLISECONDS_IN_ONE_MINUTE / MILLISECONDS_IN_ONE_SECOND
+});
+
+const formatTimeForViews = (milliseconds) => {
+
+  const minutes = formatTime(milliseconds).minutes;
+  const seconds = formatTime(milliseconds).seconds;
+
+  return {
+    minutes: minutes < 10 ? `0${minutes}` : `${minutes}`,
+    seconds: seconds < 10 ? `0${seconds}` : `${seconds}`
+  };
+};
+
 export {
   clearNode,
   getNounPluralForm,
@@ -108,5 +127,7 @@ export {
   getRandomArrayItem,
   getRandomInteger,
   findRightSong,
-  isRightGenreChecked
+  isRightGenreChecked,
+  formatTimeForViews,
+  formatTime
 };

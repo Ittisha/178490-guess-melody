@@ -1,6 +1,7 @@
 import AbstractView from './abstract-view';
 import getGameHeaderTemplate from '../views/game-header';
 import {findRightSong} from "../utils";
+import {formatTimeForViews} from "../utils";
 
 /** Class representing artist level view
  * @extends AbstractView
@@ -61,7 +62,10 @@ ${getGameHeaderTemplate(this.state)}
    * Bind callback to form change
    */
   bind() {
-    const artistForm = this.element.querySelector(`.main-list`);
+    const answerContainer = this.element;
+    this.timeSeconds = answerContainer.querySelector(`.timer-value-secs`);
+    this.timeMinutes = answerContainer.querySelector(`.timer-value-mins`);
+    const artistForm = answerContainer.querySelector(`.main-list`);
 
     const onArtistFormChange = (evt) => {
       this.onAnswer(evt);
@@ -74,6 +78,12 @@ ${getGameHeaderTemplate(this.state)}
   onAnswer(evt) {
     return evt;
   }
+
+  updateTime(time) {
+    this.timeMinutes.textContent = formatTimeForViews(time).minutes;
+    this.timeSeconds.textContent = formatTimeForViews(time).seconds;
+  }
+
 }
 
 export default ArtistLevelView;

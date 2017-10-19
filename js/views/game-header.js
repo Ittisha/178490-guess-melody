@@ -1,4 +1,5 @@
 import {initialState} from "../data/initial-data";
+import {formatTimeForViews} from "../utils";
 
 const getGameHeaderTemplate = (state) => {
   const leftLives = state.lives > 0 ? state.lives : 0;
@@ -13,9 +14,9 @@ class="timer-line"
 style="filter: url(.#blur); transform: rotate(-90deg) scaleY(-1); transform-origin: center"></circle>
 
 <div class="timer-value" xmlns="http://www.w3.org/1999/xhtml">
-  <span class="timer-value-mins">05</span><!--
+  <span class="timer-value-mins">${formatTimeForViews(state.timeLeft).minutes}</span><!--
 --><span class="timer-value-dots">:</span><!--
---><span class="timer-value-secs">00</span>
+--><span class="timer-value-secs">${formatTimeForViews(state.timeLeft).seconds}</span>
 </div>
 
 </svg>

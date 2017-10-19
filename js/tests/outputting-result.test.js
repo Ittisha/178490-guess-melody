@@ -8,10 +8,10 @@ suite(`Output current player result`, () => {
     const currentPlayerStats = {
       score: -1,
       remainingLives: 3,
-      remainingTime: 0
+      remainingTime: -1
     };
 
-    const expectedOutput = `Время вышло! Вы не успели отгадать все мелодии`;
+    const expectedOutput = `Время вышло!<br>Вы не успели отгадать все мелодии`;
 
     assert.strictEqual(outputResultMessage(othersPlayersScores, currentPlayerStats),
         expectedOutput);
@@ -22,11 +22,11 @@ suite(`Output current player result`, () => {
 
     const currentPlayerStats = {
       score: -1,
-      remainingLives: 0,
+      remainingLives: -1,
       remainingTime: 50000
     };
 
-    const expectedOutput = `У вас закончились все попытки. <br> Ничего, повезёт в следующий раз!`;
+    const expectedOutput = `У вас закончились все попытки.<br>Ничего, повезёт в следующий раз!`;
 
     assert.strictEqual(outputResultMessage(othersPlayersScores, currentPlayerStats),
         expectedOutput);
