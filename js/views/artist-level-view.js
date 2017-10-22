@@ -1,7 +1,8 @@
 import AbstractView from './abstract-view';
 import getGameHeaderTemplate from '../views/game-header';
-import {findRightSong, formatTime} from "../utils";
-import {addZeroInFront} from "../utils";
+import {findRightSong, formatTime} from '../utils';
+import {addZeroInFront} from '../utils';
+import getStrokeOffset from '../get-stroke-offset';
 
 /** Class representing artist level view
  * @extends AbstractView
@@ -65,6 +66,9 @@ ${getGameHeaderTemplate(this.state)}
     const answerContainer = this.element;
     this.timeSeconds = answerContainer.querySelector(`.timer-value-secs`);
     this.timeMinutes = answerContainer.querySelector(`.timer-value-mins`);
+
+    this.timerLine = answerContainer.querySelector(`.timer-line`);
+
     const artistForm = answerContainer.querySelector(`.main-list`);
 
     const audioPlayer = this.element.querySelector(`.player audio`);
@@ -101,9 +105,12 @@ ${getGameHeaderTemplate(this.state)}
 
   updateTime(time) {
     const {minutes, seconds} = formatTime(time);
+    const radius = this.timerLine.r.animVal.value;
 
     this.timeMinutes.textContent = addZeroInFront(minutes);
     this.timeSeconds.textContent = addZeroInFront(seconds);
+
+    this.timerLine.style.strokeDashoffset = getStrokeOffset(this.state.timeLeft, radius);
   }
 
 }

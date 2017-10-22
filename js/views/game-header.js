@@ -1,9 +1,14 @@
-import {initialState} from "../data/initial-data";
-import {addZeroInFront, formatTime} from "../utils";
+import {initialState} from '../data/initial-data';
+import {addZeroInFront, formatTime} from '../utils';
+import getStrokeOffset from '../get-stroke-offset';
+
+const TIMER_RADIUS = 370;
 
 const getGameHeaderTemplate = (state) => {
   const leftLives = state.lives > 0 ? state.lives : 0;
   const {minutes, seconds} = formatTime(state.timeLeft);
+  const dashArray = 2 * Math.PI * TIMER_RADIUS;
+  const offset = getStrokeOffset(state.timeLeft, TIMER_RADIUS);
 
   const mistakes = new Array(initialState.lives - leftLives)
       .fill(`<img class="main-mistake" src="img/wrong-answer.png" width="35" height="49">`)
@@ -11,9 +16,9 @@ const getGameHeaderTemplate = (state) => {
 
   const headerTemplate = `<svg xmlns="http://www.w3.org/2000/svg" class="timer" viewBox="0 0 780 780">
   <circle
-cx="390" cy="390" r="370"
+cx="390" cy="390" r="${TIMER_RADIUS}"
 class="timer-line"
-style="filter: url(.#blur); transform: rotate(-90deg) scaleY(-1); transform-origin: center"></circle>
+style="filter: url(.#blur); transform: rotate(-90deg) scaleY(-1); transform-origin: center; stroke-dasharray: ${dashArray}; stroke-dashoffset: ${offset}"></circle>
 
 <div class="timer-value" xmlns="http://www.w3.org/1999/xhtml">
   <span class="timer-value-mins">${addZeroInFront(minutes)}</span><!--
