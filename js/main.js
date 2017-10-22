@@ -1,6 +1,5 @@
-import {getWelcomeScreenMarkup} from './welcome-screen';
-import renderScreen from './render-screen';
-import {initialState} from './data/data';
+import {showWelcome} from './templates/welcome-screen';
+import {changeView} from './render-screen';
 
-renderScreen(getWelcomeScreenMarkup(initialState));
+changeView(showWelcome());
 

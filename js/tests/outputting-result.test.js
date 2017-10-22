@@ -1,5 +1,5 @@
 import assert from 'assert';
-import outputResultMessage from './outputting-result';
+import outputResultMessage from '../results/outputting-result';
 
 suite(`Output current player result`, () => {
   test(`Time is over`, () => {
@@ -7,11 +7,11 @@ suite(`Output current player result`, () => {
 
     const currentPlayerStats = {
       score: -1,
-      remainingNotes: 3,
-      remainingTime: 0
+      remainingLives: 3,
+      remainingTime: -1
     };
 
-    const expectedOutput = `Время вышло! Вы не успели отгадать все мелодии`;
+    const expectedOutput = `Время вышло!<br>Вы не успели отгадать все мелодии`;
 
     assert.strictEqual(outputResultMessage(othersPlayersScores, currentPlayerStats),
         expectedOutput);
@@ -22,11 +22,11 @@ suite(`Output current player result`, () => {
 
     const currentPlayerStats = {
       score: -1,
-      remainingNotes: 0,
+      remainingLives: -1,
       remainingTime: 50000
     };
 
-    const expectedOutput = `У вас закончились все попытки. Ничего, повезёт в следующий раз!`;
+    const expectedOutput = `У вас закончились все попытки.<br>Ничего, повезёт в следующий раз!`;
 
     assert.strictEqual(outputResultMessage(othersPlayersScores, currentPlayerStats),
         expectedOutput);
@@ -37,7 +37,7 @@ suite(`Output current player result`, () => {
 
     const currentPlayerStats = {
       score: 7,
-      remainingNotes: 2,
+      remainingLives: 2,
       remainingTime: 0
     };
 
@@ -52,7 +52,7 @@ suite(`Output current player result`, () => {
 
     const currentPlayerStats = {
       score: 20,
-      remainingNotes: 3,
+      remainingLives: 3,
       remainingTime: 50000
     };
 
@@ -67,7 +67,7 @@ suite(`Output current player result`, () => {
 
     const currentPlayerStats = {
       score: 10,
-      remainingNotes: 3,
+      remainingLives: 3,
       remainingTime: 0
     };
 
@@ -82,7 +82,7 @@ suite(`Output current player result`, () => {
 
     const currentPlayerStats = {
       score: 10,
-      remainingNotes: 3,
+      remainingLives: 3,
       remainingTime: 0
     };
 

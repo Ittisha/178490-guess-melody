@@ -1,32 +1,32 @@
-import {ArtistLevel} from './data/levels-data-creation';
-import renderScreen from './render-screen';
-import getArtistGame from './level-artist-screen';
-import {attemptsEndedScreenMarkup} from './attempts-ended-screen';
-import getWinScreenMarkup from "./win-screen";
-import getGenreGame from './level-genre-screen';
+import {ArtistLevel} from './classes/artist-level-class';
+import {changeView} from './render-screen';
+import showArtistLevel from './templates/level-artist-screen';
+import showLossScreen from './templates/loss-screen';
+import showWinScreen from "./templates/win-screen";
+import showGenreLevel from './templates/level-genre-screen';
+import {timer} from "./templates/welcome-screen";
 
 /**
  * Render next screen, add its event listeners, remove this screen event listeners
  * @param {Object} state - Current state of the game
  * @param {Array} levels - Levels to go throw
- * @param {Node} button - Node to remove event listener
- *@param {Function} cb - callback to remove
  */
-const switchScreen = (state, levels, button, cb) => {
+const switchScreen = (state, levels) => {
   if (state.lives < 0) {
-    renderScreen(attemptsEndedScreenMarkup);
+    clearTimeout(timer);
+    changeView(showLossScreen());
   } else if (state.questionsLeftNumber === 1) {
-    renderScreen(getWinScreenMarkup(state));
+    clearTimeout(timer);
+    changeView(showWinScreen());
   } else {
-    state.determinNextQuestion();
+    state.determineNextQuestion();
     if (levels[state.questionIndex] instanceof ArtistLevel) {
-      renderScreen(getArtistGame(state, levels));
+      changeView(showArtistLevel());
     } else {
-      renderScreen(getGenreGame(state, levels));
+      changeView(showGenreLevel());
     }
   }
 
-  button.removeEventListener(`click`, cb);
 };
 
 export default switchScreen;

@@ -1,3 +1,6 @@
+const SECONDS_IN_ONE_MINUTE = 60;
+const MILLISECONDS_IN_ONE_SECOND = 1000;
+const MILLISECONDS_IN_ONE_MINUTE = SECONDS_IN_ONE_MINUTE * MILLISECONDS_IN_ONE_SECOND;
 /**
  * Enum for russian words plural forms rule
  * @readonly
@@ -84,15 +87,29 @@ const getUniqueArrayItem = (array) => array.splice(getRandomInteger(0, array.len
 const getRandomArrayItem = (array) => array[getRandomInteger(0, array.length - 1)];
 
 /**
- * Make copy of an object
- * @param {Object} object to copy
- * @return {Object}
+ * Check if all right answers are chosen
+ * @param {Array} inputsChecked
+ * @return {boolean}
  */
-const copyObject = (object) => Object.assign({}, object);
-
-const checkGenre = (inputsChecked) => {
+const isRightGenreChecked = (inputsChecked) => {
   return inputsChecked.every((input) => input.hasAttribute(`data-isrightanswer`));
 };
+
+/**
+ * Find the right song
+ * @param {Array} songs
+ * @return {Object}
+ */
+const findRightSong = (songs) => {
+  return songs.find((it) => it.isRightAnswer === true);
+};
+
+const formatTime = (milliseconds) => ({
+  minutes: Math.floor(milliseconds / MILLISECONDS_IN_ONE_MINUTE),
+  seconds: milliseconds % MILLISECONDS_IN_ONE_MINUTE / MILLISECONDS_IN_ONE_SECOND
+});
+
+const addZeroInFront = (value) => value < 10 ? `0${value}` : `${value}`;
 
 export {
   clearNode,
@@ -100,6 +117,8 @@ export {
   getUniqueArrayItem,
   getRandomArrayItem,
   getRandomInteger,
-  copyObject,
-  checkGenre
+  findRightSong,
+  isRightGenreChecked,
+  addZeroInFront,
+  formatTime
 };
