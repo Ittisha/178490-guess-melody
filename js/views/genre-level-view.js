@@ -1,6 +1,7 @@
 import AbstractView from './abstract-view';
 import getGameHeaderTemplate from '../views/game-header';
-import {addZeroInFront, formatTime} from "../utils";
+import {addZeroInFront, formatTime} from '../utils';
+import getStrokeOffset from '../get-stroke-offset';
 
 /** Class representing artist level view
  * @extends AbstractView
@@ -61,6 +62,9 @@ ${task}
     const answerContainer = this.element;
     this.timeSeconds = answerContainer.querySelector(`.timer-value-secs`);
     this.timeMinutes = answerContainer.querySelector(`.timer-value-mins`);
+
+    this.timerLine = answerContainer.querySelector(`.timer-line`);
+
     const genreAnswerButton = answerContainer.querySelector(`.genre-answer-send`);
     genreAnswerButton.disabled = true;
 
@@ -116,9 +120,12 @@ ${task}
 
   updateTime(time) {
     const {minutes, seconds} = formatTime(time);
+    const radius = this.timerLine.r.animVal.value;
 
     this.timeMinutes.textContent = addZeroInFront(minutes);
     this.timeSeconds.textContent = addZeroInFront(seconds);
+
+    this.timerLine.style.strokeDashoffset = getStrokeOffset(this.state.timeLeft, radius);
   }
 }
 
