@@ -1,8 +1,8 @@
-import {addPlayerAnswer, nextLevel, setLives, updateGameTime} from "./game-utils";
-import {games} from "../data/initial-data";
+import {addPlayerAnswer, nextLevel, setLives, updateGameTime} from './game-utils';
+import {games} from '../data/initial-data';
 
-/** Class representing game*/
-class Game {
+/** Class representing game model*/
+class GameModel {
   /**
    * Create new game
    * @param {Array} data - Contains games data
@@ -11,19 +11,32 @@ class Game {
     this.data = data;
   }
 
+  /**
+   * Update game state
+   * @param {Object} newState
+   * @return {Object}
+   */
   update(newState) {
     this.state = newState;
     return this.state;
   }
 
+  /**
+   * Update state time
+   * @param {number} time
+   */
   updateTime(time) {
     this.update(updateGameTime(this.state, time));
   }
 
-
+  /**
+   * Define if player has attempts
+   * @return {boolean}
+   */
   canPlay() {
     return this.state.lives >= 0;
   }
+
   /**
    * Method for reducing one life
    */
@@ -36,7 +49,7 @@ class Game {
   /**
    * Set next question number and index
    */
-  determineNextQuestion() {
+  defineNextQuestion() {
     this.update(nextLevel(this.state));
   }
 
@@ -49,9 +62,13 @@ class Game {
     return this.data[this.state.questionIndex];
   }
 
+  /**
+   * Add player's answer to game state
+   * @param {Object} answer
+   */
   addPlayerAnswer(answer) {
     this.update(addPlayerAnswer(this.state, answer));
   }
 }
 
-export default Game;
+export default GameModel;

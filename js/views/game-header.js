@@ -4,6 +4,11 @@ import getStrokeOffset from '../get-stroke-offset';
 
 const TIMER_RADIUS = 370;
 
+/**
+ * Get game header template
+ * @param {Object} state
+ * @return {string}
+ */
 const getGameHeaderTemplate = (state) => {
   const leftLives = state.lives > 0 ? state.lives : 0;
   const {minutes, seconds} = formatTime(state.timeLeft);

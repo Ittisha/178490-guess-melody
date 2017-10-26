@@ -116,6 +116,10 @@ ${getGameHeaderTemplate(this.model.state)}
 
   }
 
+  /**
+   * Update timer values and line
+   * @param {number} time - New time
+   */
   updateTime(time) {
     const {minutes, seconds} = formatTime(time);
     const radius = this.timerLine.r.animVal.value;

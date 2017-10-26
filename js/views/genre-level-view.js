@@ -2,7 +2,7 @@ import AbstractView from './abstract-view';
 import getGameHeaderTemplate from '../views/game-header';
 import {addZeroInFront, formatTime} from '../utils';
 import getStrokeOffset from '../get-stroke-offset';
-import {isRightGenreChecked} from "../utils";
+import {isRightGenreChecked} from '../utils';
 
 /** Class representing artist level view
  * @extends AbstractView
@@ -131,7 +131,10 @@ ${task}
 
   }
 
-
+  /**
+   * Update timer values and line
+   * @param {number} time - New time
+   */
   updateTime(time) {
     const {minutes, seconds} = formatTime(time);
     const radius = this.timerLine.r.animVal.value;

@@ -1,15 +1,32 @@
-import {games} from "../data/initial-data";
-import {countUpScores} from "../results/scoring";
-import {getQuickAnswersScore} from "../results/scoring";
+import {games} from '../data/initial-data';
+import {countUpScores} from '../results/scoring';
+import {getQuickAnswersScore} from '../results/scoring';
 
-const setLives = (game, lives) => {
-  game = Object.assign({}, game);
-  game.lives = lives;
-  return game;
+/**
+ * Set player's lives
+ * @param {Object} state - Game state
+ * @param {number} lives - New lives quantity
+ * @return {Object} new state
+ */
+const setLives = (state, lives) => {
+  state = Object.assign({}, state);
+  state.lives = lives;
+  return state;
 };
 
-const getLevel = (num, data = games) => data[num];
+/**
+ * Return level data
+ * @param {number} levelIndex
+ * @param {Array} data
+ * @return {Object} level data
+ */
+const getLevel = (levelIndex, data = games) => data[levelIndex];
 
+/**
+ * Define next level state
+ * @param {Object} state - This level state
+ * @return {Object} next level state
+ */
 const nextLevel = (state) => {
   const next = state.questionIndex + 1;
 
@@ -24,15 +41,26 @@ const nextLevel = (state) => {
   return state;
 };
 
-const addPlayerAnswer = (game, answer) => {
-  const answers = game.playerAnswers.concat(answer);
+/**
+ * Add player answer to state
+ * @param {Object} state - Current state
+ * @param {Object} answer - Player answer
+ * @return {Object} new state
+ */
+const addPlayerAnswer = (state, answer) => {
+  const answers = state.playerAnswers.concat(answer);
 
-  game = Object.assign({}, game);
-  game.playerAnswers = answers;
+  state = Object.assign({}, state);
+  state.playerAnswers = answers;
 
-  return game;
+  return state;
 };
 
+/**
+ * Get player game result
+ * @param {Object} state
+ * @return {Object} player result
+ */
 const getPlayerResult = (state) => ({
   score: countUpScores(state.playerAnswers, state.lives),
   remainingLives: state.lives,
@@ -40,6 +68,12 @@ const getPlayerResult = (state) => ({
   quickScores: getQuickAnswersScore(state.playerAnswers)
 });
 
+/**
+ * Update game time
+ * @param {Object} state - Current level state
+ * @param {number} time - New time
+ * @return {Object} new state
+ */
 const updateGameTime = (state, time) => {
   state = Object.assign({}, state);
   state.timeLeft = time;
