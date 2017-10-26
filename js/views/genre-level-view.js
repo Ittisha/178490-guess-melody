@@ -2,6 +2,7 @@ import AbstractView from './abstract-view';
 import getGameHeaderTemplate from '../views/game-header';
 import {addZeroInFront, formatTime} from '../utils';
 import getStrokeOffset from '../get-stroke-offset';
+import {isRightGenreChecked} from "../utils";
 
 /** Class representing artist level view
  * @extends AbstractView
@@ -9,13 +10,11 @@ import getStrokeOffset from '../get-stroke-offset';
 class GenreLevelView extends AbstractView {
   /**
    * Create artist level view
-   * @param {Object} state - The state of the game
-   * @param {Array} gamesData
+   * @param {Object} model - The model of the game
    */
-  constructor(state, gamesData) {
+  constructor(model) {
     super();
-    this.state = state;
-    this.gamesData = gamesData;
+    this.model = model;
   }
 
   /**
@@ -23,7 +22,7 @@ class GenreLevelView extends AbstractView {
    * @return {string} - String template for html-markup
    */
   get template() {
-    const levelTask = this.gamesData[this.state.questionIndex];
+    const levelTask = this.model.getQuestion();
     const answerVariantsData = [...levelTask.answers];
 
     const answers = answerVariantsData.map((song, index) => `<div class="genre-answer">
@@ -36,7 +35,7 @@ class GenreLevelView extends AbstractView {
       </div>
     </div>
   </div>
-  <input type="checkbox" name="answer" value="answer-${this.questionIndex + 1}" id="a-${index}" ${song.isRightAnswer ? `data-isRightAnswer` : ``}>
+  <input type="checkbox" name="answer" value="answer-${this.model.state.questionIndex + 1}" id="a-${index}" ${song.isRightAnswer ? `data-isRightAnswer` : ``}>
   <label class="genre-answer-check" for="a-${index}"></label>
  </div>`).join(``);
 
@@ -50,7 +49,7 @@ class GenreLevelView extends AbstractView {
  </div>`;
 
     return `<section class="main main--level main--level-genre">
-${getGameHeaderTemplate(this.state)}
+${getGameHeaderTemplate(this.model.state)}
 ${task}
 </section>`;
   }
@@ -102,7 +101,17 @@ ${task}
     };
 
     const onGenreAnswerButtonClick = (evt) => {
-      this.onAnswer(evt);
+      evt.preventDefault();
+
+      const checkedChecks = Array.from(evt.target.parentNode.querySelectorAll(`input[type="checkbox"]:checked`));
+      const isRight = isRightGenreChecked(checkedChecks);
+
+      if (isRight) {
+        this.onSuccess();
+      } else {
+        this.onMistake();
+      }
+
       genreAnswerButton.removeEventListener(`click`, onGenreAnswerButtonClick);
       genreForm.removeEventListener(`change`, onCheckboxChange);
       genreForm.removeEventListener(`click`, onGenreFormClick);
@@ -114,9 +123,14 @@ ${task}
 
   }
 
-  onAnswer(evt) {
-    return evt;
+  onSuccess() {
+
   }
+
+  onMistake() {
+
+  }
+
 
   updateTime(time) {
     const {minutes, seconds} = formatTime(time);
@@ -125,7 +139,7 @@ ${task}
     this.timeMinutes.textContent = addZeroInFront(minutes);
     this.timeSeconds.textContent = addZeroInFront(seconds);
 
-    this.timerLine.style.strokeDashoffset = getStrokeOffset(this.state.timeLeft, radius);
+    this.timerLine.style.strokeDashoffset = getStrokeOffset(time, radius);
   }
 }
 

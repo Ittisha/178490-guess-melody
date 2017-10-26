@@ -1,5 +1,7 @@
-import {showWelcome} from './templates/welcome-screen';
-import {changeView} from './render-screen';
+// import {showWelcome} from './templates/welcome-screen';
+// import {changeView} from './render-screen';
+import App from './application';
 
-changeView(showWelcome());
+// changeView(showWelcome());
 
+App.showWelcome();
