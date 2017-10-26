@@ -4,6 +4,8 @@ import {addZeroInFront, formatTime} from '../utils';
 import getStrokeOffset from '../get-stroke-offset';
 import {isRightGenreChecked} from '../utils';
 
+const CRITICAL_TIME = 30000;
+
 /** Class representing artist level view
  * @extends AbstractView
  */
@@ -59,6 +61,7 @@ ${task}
    */
   bind() {
     const answerContainer = this.element;
+    this.timerContainer = answerContainer.querySelector(`.timer-value`);
     this.timeSeconds = answerContainer.querySelector(`.timer-value-secs`);
     this.timeMinutes = answerContainer.querySelector(`.timer-value-mins`);
 
@@ -143,6 +146,16 @@ ${task}
     this.timeSeconds.textContent = addZeroInFront(seconds);
 
     this.timerLine.style.strokeDashoffset = getStrokeOffset(time, radius);
+  }
+
+  /**
+   * Add time blinking
+   * @param {number} time - Remaining time
+   */
+  addBlinking(time) {
+    if (time < CRITICAL_TIME && !this.timerContainer.classList.contains(`timer-value--finished`)) {
+      this.timerContainer.classList.add(`timer-value--finished`);
+    }
   }
 }
 

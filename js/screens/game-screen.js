@@ -71,6 +71,7 @@ class GameScreen {
       } else {
         this.model.defineNextQuestion();
         this.changeLevel();
+        this.level.addBlinking(this.model.state.timeLeft);
       }
     };
 
@@ -84,6 +85,7 @@ class GameScreen {
 
         this.model.defineNextQuestion();
         this.changeLevel();
+        this.level.addBlinking(this.model.state.timeLeft);
       }
     };
 

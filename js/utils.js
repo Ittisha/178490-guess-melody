@@ -1,6 +1,7 @@
 const SECONDS_IN_ONE_MINUTE = 60;
 const MILLISECONDS_IN_ONE_SECOND = 1000;
 const MILLISECONDS_IN_ONE_MINUTE = SECONDS_IN_ONE_MINUTE * MILLISECONDS_IN_ONE_SECOND;
+
 /**
  * Enum for russian words plural forms rule
  * @readonly

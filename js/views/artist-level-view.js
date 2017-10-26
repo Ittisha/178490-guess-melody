@@ -4,6 +4,8 @@ import {findRightSong, formatTime} from '../utils';
 import {addZeroInFront} from '../utils';
 import getStrokeOffset from '../get-stroke-offset';
 
+const CRITICAL_TIME = 30000;
+
 /** Class representing artist level view
  * @extends AbstractView
  */
@@ -62,6 +64,7 @@ ${getGameHeaderTemplate(this.model.state)}
    */
   bind() {
     const answerContainer = this.element;
+    this.timerContainer = answerContainer.querySelector(`.timer-value`);
     this.timeSeconds = answerContainer.querySelector(`.timer-value-secs`);
     this.timeMinutes = answerContainer.querySelector(`.timer-value-mins`);
 
@@ -121,6 +124,7 @@ ${getGameHeaderTemplate(this.model.state)}
    * @param {number} time - New time
    */
   updateTime(time) {
+    this.addBlinking(time);
     const {minutes, seconds} = formatTime(time);
     const radius = this.timerLine.r.animVal.value;
 
@@ -128,6 +132,16 @@ ${getGameHeaderTemplate(this.model.state)}
     this.timeSeconds.textContent = addZeroInFront(seconds);
 
     this.timerLine.style.strokeDashoffset = getStrokeOffset(time, radius);
+  }
+
+  /**
+   * Add time blinking
+   * @param {number} time - Remaining time
+   */
+  addBlinking(time) {
+    if (time < CRITICAL_TIME && !this.timerContainer.classList.contains(`timer-value--finished`)) {
+      this.timerContainer.classList.add(`timer-value--finished`);
+    }
   }
 
 }
