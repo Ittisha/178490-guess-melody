@@ -1,9 +1,15 @@
-import {getRandomInteger} from "../utils";
-import {ArtistLevel} from "../classes/artist-level-class";
-import {GenreLevel} from "../classes/genre-level-class";
+import {getRandomInteger} from '../utils';
+import {ArtistLevel} from '../classes/artist-level-class';
+import {GenreLevel} from '../classes/genre-level-class';
 
 const MIN_ONE_TYPE_LEVEL_NUMBER = 1;
 
+/**
+ * Create array with tasks
+ * @param {Array} audioData
+ * @param {number} levelsNumber
+ * @return {Array} array with levels tasks
+ */
 const createGameTasks = (audioData, levelsNumber) => {
   const artistLevelNumber = getRandomInteger(MIN_ONE_TYPE_LEVEL_NUMBER, levelsNumber - MIN_ONE_TYPE_LEVEL_NUMBER);
 

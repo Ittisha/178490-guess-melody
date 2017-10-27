@@ -4,19 +4,19 @@ import {findRightSong, formatTime} from '../utils';
 import {addZeroInFront} from '../utils';
 import getStrokeOffset from '../get-stroke-offset';
 
+const CRITICAL_TIME = 30000;
+
 /** Class representing artist level view
  * @extends AbstractView
  */
 class ArtistLevelView extends AbstractView {
   /**
    * Create artist level view
-   * @param {Object} state - The state of the game
-   * @param {Array} gamesData
+   * @param {Object} model - The model of the game
    */
-  constructor(state, gamesData) {
+  constructor(model) {
     super();
-    this.state = state;
-    this.gamesData = gamesData;
+    this.model = model;
   }
 
   /**
@@ -24,7 +24,7 @@ class ArtistLevelView extends AbstractView {
    * @return {string} - String template for html-markup
    */
   get template() {
-    const levelTask = this.state.getQuestion(this.gamesData);
+    const levelTask = this.model.getQuestion();
     const answerVariants = [...levelTask.answers];
     const rightSong = findRightSong(answerVariants);
 
@@ -40,7 +40,7 @@ class ArtistLevelView extends AbstractView {
 </div>`;
 
     const answers = answerVariants.map((song, index) => `<div class="main-answer-wrapper">
-  <input class="main-answer-r" type="radio" id="answer-${index}" ${song.isRightAnswer ? `data-isRightAnswer` : ``} name="answer" value="val-${this.state.questionIndex + 1}"/>
+  <input class="main-answer-r" type="radio" id="answer-${index}" ${song.isRightAnswer ? `data-isRightAnswer` : ``} name="answer" value="val-${this.model.state.questionIndex + 1}"/>
   <label class="main-answer" for="answer-${index}">
   <img class="main-answer-preview" src="${song.image}"
 alt="${song.artist}" width="134" height="134">
@@ -49,7 +49,7 @@ alt="${song.artist}" width="134" height="134">
 </div>`).join(``);
 
     return `<section class="main main--level main--level-artist">
-${getGameHeaderTemplate(this.state)}
+${getGameHeaderTemplate(this.model.state)}
   <div class="main-wrap">
   ${question}
     <form class="main-list">
@@ -64,6 +64,7 @@ ${getGameHeaderTemplate(this.state)}
    */
   bind() {
     const answerContainer = this.element;
+    this.timerContainer = answerContainer.querySelector(`.timer-value`);
     this.timeSeconds = answerContainer.querySelector(`.timer-value-secs`);
     this.timeMinutes = answerContainer.querySelector(`.timer-value-mins`);
 
@@ -75,9 +76,20 @@ ${getGameHeaderTemplate(this.state)}
     const playerButton = this.element.querySelector(`.player .player-control`);
 
     const onArtistFormChange = (evt) => {
-      this.onAnswer(evt);
-      artistForm.removeEventListener(`change`, onArtistFormChange);
-      playerButton.removeEventListener(`click`, onPlayerButtonCLick);
+      if (evt.target.type === `radio`) {
+        evt.preventDefault();
+
+        const isRight = evt.target.hasAttribute(`data-isrightanswer`);
+
+        if (isRight) {
+          this.onSuccess();
+        } else {
+          this.onMistake();
+        }
+
+        artistForm.removeEventListener(`change`, onArtistFormChange);
+        playerButton.removeEventListener(`click`, onPlayerButtonCLick);
+      }
     };
 
     artistForm.addEventListener(`change`, onArtistFormChange);
@@ -99,18 +111,37 @@ ${getGameHeaderTemplate(this.state)}
     playerButton.addEventListener(`click`, onPlayerButtonCLick);
   }
 
-  onAnswer(evt) {
-    return evt;
+  onSuccess() {
+
   }
 
+  onMistake() {
+
+  }
+
+  /**
+   * Update timer values and line
+   * @param {number} time - New time
+   */
   updateTime(time) {
+    this.addBlinking(time);
     const {minutes, seconds} = formatTime(time);
     const radius = this.timerLine.r.animVal.value;
 
     this.timeMinutes.textContent = addZeroInFront(minutes);
     this.timeSeconds.textContent = addZeroInFront(seconds);
 
-    this.timerLine.style.strokeDashoffset = getStrokeOffset(this.state.timeLeft, radius);
+    this.timerLine.style.strokeDashoffset = getStrokeOffset(time, radius);
+  }
+
+  /**
+   * Add time blinking
+   * @param {number} time - Remaining time
+   */
+  addBlinking(time) {
+    if (time < CRITICAL_TIME && !this.timerContainer.classList.contains(`timer-value--finished`)) {
+      this.timerContainer.classList.add(`timer-value--finished`);
+    }
   }
 
 }

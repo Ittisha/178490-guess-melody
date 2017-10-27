@@ -1,10 +1,11 @@
 const SECONDS_IN_ONE_MINUTE = 60;
 const MILLISECONDS_IN_ONE_SECOND = 1000;
 const MILLISECONDS_IN_ONE_MINUTE = SECONDS_IN_ONE_MINUTE * MILLISECONDS_IN_ONE_SECOND;
+
 /**
  * Enum for russian words plural forms rule
  * @readonly
- * @enum {number}
+ * @enum {Object}
  */
 const RussianPluralsRule = {
   ONE: {
@@ -104,11 +105,21 @@ const findRightSong = (songs) => {
   return songs.find((it) => it.isRightAnswer === true);
 };
 
+/**
+ * Format time representation
+ * @param {number} milliseconds
+ * @return {Object} Time object with minutes and seconds
+ */
 const formatTime = (milliseconds) => ({
   minutes: Math.floor(milliseconds / MILLISECONDS_IN_ONE_MINUTE),
   seconds: milliseconds % MILLISECONDS_IN_ONE_MINUTE / MILLISECONDS_IN_ONE_SECOND
 });
 
+/**
+ * Add leading zero
+ * @param {number} value
+ * @return {string}
+ */
 const addZeroInFront = (value) => value < 10 ? `0${value}` : `${value}`;
 
 export {

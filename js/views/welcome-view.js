@@ -1,5 +1,5 @@
 import AbstractView from './abstract-view';
-import {initialState} from "../data/initial-data";
+import {initialState} from '../data/initial-data';
 
 /** Class representing welcome view
  * @extends AbstractView

@@ -1,6 +1,6 @@
-import Level from "./level-class";
-import {getRandomArrayItem, getUniqueArrayItem} from "../utils";
-import AnswerVariant from "./answer-variant-class";
+import Level from './level-class';
+import {getRandomArrayItem, getUniqueArrayItem} from '../utils';
+import AnswerVariant from './answer-variant-class';
 
 /**
  * Class representing a genre level
