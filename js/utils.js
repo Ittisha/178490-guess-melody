@@ -122,6 +122,16 @@ const formatTime = (milliseconds) => ({
  */
 const addZeroInFront = (value) => value < 10 ? `0${value}` : `${value}`;
 
+const pauseAudio = (buttons, targetButton) => {
+  const playButton = buttons.find((it) => it.classList.contains(`player-control--pause`)
+  && it !== targetButton);
+  if (playButton) {
+    playButton.parentNode.querySelector(`audio`).pause();
+    playButton.classList.toggle(`player-control--pause`);
+    playButton.classList.toggle(`player-control--play`);
+  }
+};
+
 export {
   clearNode,
   getNounPluralForm,
@@ -131,5 +141,6 @@ export {
   findRightSong,
   isRightGenreChecked,
   addZeroInFront,
-  formatTime
+  formatTime,
+  pauseAudio
 };
