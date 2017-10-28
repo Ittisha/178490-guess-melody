@@ -37,6 +37,7 @@ class GameScreen {
         if (newTime === -1) {
           App.loseGame(this.model.state);
           clearTimeout(this.gameTimer);
+          this.gameTimer = void (0);
         }
         this.level.updateTime(newTime);
 
@@ -44,7 +45,10 @@ class GameScreen {
       }, 1000);
     };
 
-    startTimer();
+    if (!this.gameTimer) {
+      startTimer();
+    }
+
     this.changeLevel();
   }
 
@@ -65,12 +69,14 @@ class GameScreen {
       if (!this.model.canPlay()) {
         App.loseGame(this.model.state);
         clearTimeout(this.gameTimer);
+        this.gameTimer = void (0);
       } else if (this.model.state.questionsLeftNumber === 1) {
         App.winScreen(this.model.state);
         clearTimeout(this.gameTimer);
+        this.gameTimer = void (0);
       } else {
         this.model.defineNextQuestion();
-        this.changeLevel();
+        App.startGame(this.model.state);
         this.level.addBlinking(this.model.state.timeLeft);
       }
     };
@@ -81,10 +87,11 @@ class GameScreen {
       if (this.model.state.questionsLeftNumber === 1) {
         App.winScreen(this.model.state);
         clearTimeout(this.gameTimer);
+        this.gameTimer = void (0);
       } else {
 
         this.model.defineNextQuestion();
-        this.changeLevel();
+        App.startGame(this.model.state);
         this.level.addBlinking(this.model.state.timeLeft);
       }
     };
