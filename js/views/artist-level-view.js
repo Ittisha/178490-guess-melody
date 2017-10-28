@@ -1,10 +1,9 @@
 import AbstractView from './abstract-view';
+import {CRITICAL_TIME} from '../data/initial-data';
 import getGameHeaderTemplate from '../views/game-header';
-import {findRightSong, formatTime} from '../utils';
+import {findRightSong, formatTime, switchPlayPause} from '../utils';
 import {addZeroInFront} from '../utils';
 import getStrokeOffset from '../get-stroke-offset';
-
-const CRITICAL_TIME = 30000;
 
 /** Class representing artist level view
  * @extends AbstractView
@@ -65,15 +64,15 @@ ${getGameHeaderTemplate(this.model.state)}
   bind() {
     const answerContainer = this.element;
     this.timerContainer = answerContainer.querySelector(`.timer-value`);
-    this.timeSeconds = answerContainer.querySelector(`.timer-value-secs`);
-    this.timeMinutes = answerContainer.querySelector(`.timer-value-mins`);
+    this.timeSeconds = this.timerContainer.querySelector(`.timer-value-secs`);
+    this.timeMinutes = this.timerContainer.querySelector(`.timer-value-mins`);
 
     this.timerLine = answerContainer.querySelector(`.timer-line`);
 
     const artistForm = answerContainer.querySelector(`.main-list`);
 
-    const audioPlayer = this.element.querySelector(`.player audio`);
-    const playerButton = this.element.querySelector(`.player .player-control`);
+    const audioPlayer = answerContainer.querySelector(`.player audio`);
+    const playerButton = answerContainer.querySelector(`.player .player-control`);
 
     const onArtistFormChange = (evt) => {
       if (evt.target.type === `radio`) {
@@ -101,11 +100,7 @@ ${getGameHeaderTemplate(this.model.state)}
       button.classList.toggle(`player-control--pause`);
       button.classList.toggle(`player-control--play`);
 
-      if (audioPlayer.paused) {
-        audioPlayer.play();
-      } else {
-        audioPlayer.pause();
-      }
+      switchPlayPause(audioPlayer);
     };
 
     playerButton.addEventListener(`click`, onPlayerButtonCLick);

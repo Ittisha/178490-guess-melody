@@ -1,10 +1,9 @@
 import AbstractView from './abstract-view';
+import {CRITICAL_TIME} from '../data/initial-data';
 import getGameHeaderTemplate from '../views/game-header';
-import {addZeroInFront, formatTime, pauseAudio} from '../utils';
+import {addZeroInFront, formatTime, pauseAudio, switchPlayPause} from '../utils';
 import getStrokeOffset from '../get-stroke-offset';
 import {isRightGenreChecked} from '../utils';
-
-const CRITICAL_TIME = 30000;
 
 /** Class representing artist level view
  * @extends AbstractView
@@ -62,17 +61,18 @@ ${task}
   bind() {
     const answerContainer = this.element;
     this.timerContainer = answerContainer.querySelector(`.timer-value`);
-    this.timeSeconds = answerContainer.querySelector(`.timer-value-secs`);
-    this.timeMinutes = answerContainer.querySelector(`.timer-value-mins`);
+    this.timeSeconds = this.timerContainer.querySelector(`.timer-value-secs`);
+    this.timeMinutes = this.timerContainer.querySelector(`.timer-value-mins`);
 
     this.timerLine = answerContainer.querySelector(`.timer-line`);
 
     const playerControls = Array.from(answerContainer.querySelectorAll(`.player-control`));
 
-    const genreAnswerButton = answerContainer.querySelector(`.genre-answer-send`);
+    const genreForm = answerContainer.querySelector(`.genre`);
+
+    const genreAnswerButton = genreForm.querySelector(`.genre-answer-send`);
     genreAnswerButton.disabled = true;
 
-    const genreForm = answerContainer.querySelector(`.genre`);
     const genreAnswerChecks = Array.from(genreForm.querySelectorAll(`input[name="answer"]`));
 
     const onGenreFormClick = (evt) => {
@@ -88,11 +88,8 @@ ${task}
 
         button.classList.toggle(`player-control--pause`);
         button.classList.toggle(`player-control--play`);
-        if (audioPlayer.paused) {
-          audioPlayer.play();
-        } else {
-          audioPlayer.pause();
-        }
+
+        switchPlayPause(audioPlayer);
       }
     };
 

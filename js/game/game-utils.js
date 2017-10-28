@@ -86,4 +86,5 @@ export {getLevel,
   setLives,
   addPlayerAnswer,
   getPlayerResult,
-  updateGameTime};
+  updateGameTime
+};

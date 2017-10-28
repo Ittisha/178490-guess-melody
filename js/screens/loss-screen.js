@@ -18,8 +18,7 @@ class LossScreen {
     this.result = getLossMessages(statistics, getPlayerResult(state));
     this.view = new LossView(this.result);
 
-    this.view.onReplay = (evt) => {
-      evt.preventDefault();
+    this.view.onReplay = () => {
       App.startGame();
     };
 

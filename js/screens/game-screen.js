@@ -34,11 +34,12 @@ class GameScreen {
       this.gameTimer = setTimeout(() => {
         const newTime = this.timer.tick();
         this.model.updateTime(newTime);
+
         if (newTime === -1) {
           App.loseGame(this.model.state);
-          clearTimeout(this.gameTimer);
-          this.gameTimer = void (0);
+          this.resetTimer();
         }
+
         this.level.updateTime(newTime);
 
         startTimer();
@@ -68,17 +69,19 @@ class GameScreen {
 
       if (!this.model.canPlay()) {
         App.loseGame(this.model.state);
-        clearTimeout(this.gameTimer);
-        this.gameTimer = void (0);
-      } else if (this.model.state.questionsLeftNumber === 1) {
-        App.winScreen(this.model.state);
-        clearTimeout(this.gameTimer);
-        this.gameTimer = void (0);
-      } else {
-        this.model.defineNextQuestion();
-        App.startGame(this.model.state);
-        this.level.addBlinking(this.model.state.timeLeft);
+        this.resetTimer();
+        return;
       }
+
+      if (this.model.state.questionsLeftNumber === 1) {
+        App.winScreen(this.model.state);
+        this.resetTimer();
+        return;
+      }
+
+      this.model.defineNextQuestion();
+      App.startGame(this.model.state);
+
     };
 
     this.level.onSuccess = () => {
@@ -86,17 +89,21 @@ class GameScreen {
 
       if (this.model.state.questionsLeftNumber === 1) {
         App.winScreen(this.model.state);
-        clearTimeout(this.gameTimer);
-        this.gameTimer = void (0);
-      } else {
-
-        this.model.defineNextQuestion();
-        App.startGame(this.model.state);
-        this.level.addBlinking(this.model.state.timeLeft);
+        this.resetTimer();
+        return;
       }
+
+      this.model.defineNextQuestion();
+      App.startGame(this.model.state);
+
     };
 
     changeView(this.level);
+  }
+
+  resetTimer() {
+    clearTimeout(this.gameTimer);
+    this.gameTimer = void (0);
   }
 
 }
