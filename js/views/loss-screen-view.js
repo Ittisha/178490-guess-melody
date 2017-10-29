@@ -36,15 +36,16 @@ class LossView extends AbstractView {
      * @param {Object} evt
      */
     const onRestartButtonClick = (evt) => {
-      this.onReplay(evt);
+      evt.preventDefault();
+      this.onReplay();
       restartButton.removeEventListener(`click`, onRestartButtonClick);
     };
 
     restartButton.addEventListener(`click`, onRestartButtonClick);
   }
 
-  onReplay(evt) {
-    return evt;
+  onReplay() {
+
   }
 }
 

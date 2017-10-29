@@ -1,10 +1,9 @@
 import AbstractView from './abstract-view';
+import {CRITICAL_TIME} from '../data/initial-data';
 import getGameHeaderTemplate from '../views/game-header';
-import {addZeroInFront, formatTime} from '../utils';
+import {addZeroInFront, formatTime, pauseAudio, switchPlayPause} from '../utils';
 import getStrokeOffset from '../get-stroke-offset';
 import {isRightGenreChecked} from '../utils';
-
-const CRITICAL_TIME = 30000;
 
 /** Class representing artist level view
  * @extends AbstractView
@@ -31,7 +30,7 @@ class GenreLevelView extends AbstractView {
   <div class="player-wrapper">
     <div class="player">
       <audio src="${song.src}"></audio>
-      <button class="player-control player-control--pause"></button>
+      <button class="player-control player-control--play"></button>
       <div class="player-track">
         <span class="player-status"></span>
       </div>
@@ -62,33 +61,35 @@ ${task}
   bind() {
     const answerContainer = this.element;
     this.timerContainer = answerContainer.querySelector(`.timer-value`);
-    this.timeSeconds = answerContainer.querySelector(`.timer-value-secs`);
-    this.timeMinutes = answerContainer.querySelector(`.timer-value-mins`);
+    this.timeSeconds = this.timerContainer.querySelector(`.timer-value-secs`);
+    this.timeMinutes = this.timerContainer.querySelector(`.timer-value-mins`);
 
     this.timerLine = answerContainer.querySelector(`.timer-line`);
 
-    const genreAnswerButton = answerContainer.querySelector(`.genre-answer-send`);
-    genreAnswerButton.disabled = true;
+    const playerControls = Array.from(answerContainer.querySelectorAll(`.player-control`));
 
     const genreForm = answerContainer.querySelector(`.genre`);
+
+    const genreAnswerButton = genreForm.querySelector(`.genre-answer-send`);
+    genreAnswerButton.disabled = true;
+
     const genreAnswerChecks = Array.from(genreForm.querySelectorAll(`input[name="answer"]`));
 
     const onGenreFormClick = (evt) => {
-
       const button = evt.target;
+
       if (button.classList.contains(`player-control`)) {
         evt.preventDefault();
+
+        pauseAudio(playerControls, button);
 
         const playerContainer = button.parentNode;
         const audioPlayer = playerContainer.querySelector(`audio`);
 
         button.classList.toggle(`player-control--pause`);
         button.classList.toggle(`player-control--play`);
-        if (audioPlayer.paused) {
-          audioPlayer.play();
-        } else {
-          audioPlayer.pause();
-        }
+
+        switchPlayPause(audioPlayer);
       }
     };
 
@@ -139,6 +140,7 @@ ${task}
    * @param {number} time - New time
    */
   updateTime(time) {
+    this.addBlinking(time);
     const {minutes, seconds} = formatTime(time);
     const radius = this.timerLine.r.animVal.value;
 

@@ -122,6 +122,33 @@ const formatTime = (milliseconds) => ({
  */
 const addZeroInFront = (value) => value < 10 ? `0${value}` : `${value}`;
 
+/**
+ * Pause playing audio if control isn't target button
+ * @param {Array} buttons - Controls of all audio tags
+ * @param {Element} targetButton - Clicked audio control
+ */
+const pauseAudio = (buttons, targetButton) => {
+  const playButton = buttons.find((it) => it.classList.contains(`player-control--pause`)
+  && it !== targetButton);
+  if (playButton) {
+    playButton.parentNode.querySelector(`audio`).pause();
+    playButton.classList.toggle(`player-control--pause`);
+    playButton.classList.toggle(`player-control--play`);
+  }
+};
+
+/**
+ * Switch play and pause
+ * @param {Element} player - Tag audio
+ */
+const switchPlayPause = (player) => {
+  if (player.paused) {
+    player.play();
+  } else {
+    player.pause();
+  }
+};
+
 export {
   clearNode,
   getNounPluralForm,
@@ -131,5 +158,7 @@ export {
   findRightSong,
   isRightGenreChecked,
   addZeroInFront,
-  formatTime
+  formatTime,
+  pauseAudio,
+  switchPlayPause
 };
