@@ -4,7 +4,7 @@ import {initialState} from './data/initial-data';
 import loseGameScreen from './screens/loss-screen';
 import winGameScreen from './screens/win-screen';
 import Loader from './data/loader';
-import {adaptData/* , preloadAudio, getUrlsArray*/} from './data/game-adapter';
+import {adaptData, preloadAudio, getUrlsArray} from './data/game-adapter';
 
 const ControllerId = {
   WELCOME: ``,
@@ -82,18 +82,14 @@ class Application {
   }
 }
 
-/* Loader.loadData().
+Loader.loadData().
     then(adaptData).
     then((questData) => {
       Application.init(questData);
       preloadAudio(getUrlsArray(questData)).
-          then(() => Application.routes[ControllerId.WELCOME].letStart()).
+          then(() => Application.routes[ControllerId.WELCOME].letStart(),
+              () => Application.routes[ControllerId.WELCOME].showWarning()).
           catch(window.console.error);
-    }).catch(window.console.error);*/
-
-Loader.loadData().
-    then(adaptData).
-    then((questData) => Application.init(questData)).
-    catch(window.console.error);
+    }).catch(window.console.error);
 
 export default Application;

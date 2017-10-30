@@ -24,9 +24,14 @@ class WelcomeScreen {
     };
   }
 
-/*  letStart() {
+  letStart() {
     this.view.stopPreloader();
-  }*/
+  }
+
+  showWarning() {
+    this.letStart();
+    this.view.showWarning();
+  }
 }
 
 export default new WelcomeScreen();

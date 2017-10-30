@@ -48,7 +48,7 @@
   text-indent: -100em;
   transform-origin: center;
   width: 0;
-  // display: none;
+  display: none;
 }
 
 .main-play:hover {
@@ -57,4 +57,59 @@
 
 .main-play:active {
   transform: scale(1.04);
+}
+
+.error-message {
+  width: 400px;
+  height: auto;
+
+  position: fixed;
+  top: 50%;
+  left: 50%;
+
+  margin-left: -200px;
+  margin-top: -75px;
+
+  background-color: rgba(255, 99, 71, 0.7);
+  border: 1px solid red;
+  border-radius: 5px;
+
+  color: black;
+  z-index: 3;
+
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  line-height: 25px;
+  padding-top: 50px;
+  padding-bottom: 50px;
+
+}
+.error-message-close {
+  position: absolute;
+  right: -22px;
+  top: -22px;
+  display: block;
+  width: 22px;
+  height: 22px;
+  cursor: auto;
+}
+
+.error-message-close::before,
+.error-message-close::after {
+  content: '';
+  position: absolute;
+  background-color: $color-text-dark;
+  width: 19px;
+  height: 3px;
+  top: 10px;
+  left: 2px;
+}
+
+.error-message-close::before{
+   transform: rotate(-45deg);
+ }
+
+.error-message-close::after{
+  transform: rotate(45deg);
 }

@@ -3,7 +3,7 @@ const QuestionType = {
   ARTIST: `artist`
 };
 
-/* const getUrlsArray = (data) => {
+const getUrlsArray = (data) => {
   const urls = data.map((question) => {
     if (question.src) {
       return question.src;
@@ -15,24 +15,23 @@ const QuestionType = {
 };
 
 const preloadAudio = (urls) => {
-  urls = urls.filter((url, index, urls) => {
-    return url !== `` && urls.indexOf(url) === index;
+  urls = urls.filter((url, index, self) => {
+    return url !== `` && self.indexOf(url) === index;
   });
 
   return Promise.all(urls.map((url) => {
-    const watchWhatResolved = new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       const audio = new Audio();
       audio.addEventListener(`canplaythrough`, resolve, false);
       audio.preload = `auto`;
       audio.src = url;
-      audio.load();
+
+      setTimeout(() => {
+        reject();
+      }, 5000);
     });
-    setInterval(() => {
-      console.log(watchWhatResolved, url);
-    }, 1000);
-return watchWhatResolved;
   }));
-};*/
+};
 
 const preprocessArtistAnswers = (answers) => {
   return answers.map((it) => ({
@@ -73,4 +72,4 @@ const adaptData = (data) => {
   });
 };
 
-export {adaptData/* , preloadAudio, getUrlsArray*/};
+export {adaptData, preloadAudio, getUrlsArray};
