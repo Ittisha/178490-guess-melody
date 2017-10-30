@@ -11,8 +11,11 @@ class WelcomeView extends AbstractView {
    * @return {string} - String template for html-markup
    */
   get template() {
+    // const preloader = `<div class="main-preloader"></div>`;
+
     return `<section class="main main--welcome">
   <section class="logo" title="Угадай мелодию"><h1>Угадай мелодию</h1></section>
+  <!--\${preloader}-->
   <button class="main-play">Начать игру</button>
   <h2 class="title main-title">Правила игры</h2>
   <p class="text main-text">
@@ -27,15 +30,24 @@ class WelcomeView extends AbstractView {
    * Bind callback to button click
    */
   bind() {
-    const playButton = this.element.querySelector(`.main-play`);
+    const container = this.element;
+    this.preloader = container.querySelector(`.main-preloader`);
+    this.playButton = container.querySelector(`.main-play`);
+
     const onPlayButtonClick = () => {
       this.onStart();
-      playButton.removeEventListener(`click`, onPlayButtonClick);
+      this.playButton.removeEventListener(`click`, onPlayButtonClick);
     };
-    playButton.addEventListener(`click`, onPlayButtonClick);
+
+    this.playButton.addEventListener(`click`, onPlayButtonClick);
   }
 
   onStart() {}
+
+  /* stopPreloader() {
+    this.preloader.style.display = `none`;
+    this.playButton.style.display = `block`;
+  }*/
 }
 
 export default WelcomeView;

@@ -50,7 +50,7 @@ class GameModel {
    * Set next question number and index
    */
   defineNextQuestion() {
-    this.update(nextLevel(this.state));
+    this.update(nextLevel(this.state, this.data));
   }
 
 

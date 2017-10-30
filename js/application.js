@@ -1,8 +1,10 @@
 import welcomeScreen from './screens/welcome-screen';
-import gameScreen from './screens/game-screen';
+import GameScreen from './screens/game-screen';
 import {initialState} from './data/initial-data';
 import loseGameScreen from './screens/loss-screen';
 import winGameScreen from './screens/win-screen';
+import Loader from './data/loader';
+import {adaptData/* , preloadAudio, getUrlsArray*/} from './data/game-adapter';
 
 const ControllerId = {
   WELCOME: ``,
@@ -33,29 +35,31 @@ const loadState = (dataString) => {
   }
 };
 
-const routes = {
-  [ControllerId.WELCOME]: welcomeScreen,
-  [ControllerId.GAME]: gameScreen,
-  [ControllerId.LOSE]: loseGameScreen,
-  [ControllerId.RESULT]: winGameScreen
-};
 
 /**
  * Class representing application
  */
 class Application {
-  static init() {
+  static init(questData) {
+
+    Application.routes = {
+      [ControllerId.WELCOME]: welcomeScreen,
+      [ControllerId.GAME]: new GameScreen(questData),
+      [ControllerId.LOSE]: loseGameScreen,
+      [ControllerId.RESULT]: winGameScreen
+    };
+
     const hashChangeHandler = () => {
       const hashValue = location.hash.replace(`#`, ``);
-      const [id, data] = hashValue.split(`?`);
-      this.changeHash(id, data);
+      Application.changeHash(hashValue);
     };
     window.onhashchange = hashChangeHandler;
     hashChangeHandler();
+
   }
 
   static changeHash(id, state) {
-    const controller = routes[id];
+    const controller = Application.routes[id];
     if (controller) {
       controller.init(loadState(state));
     }
@@ -66,11 +70,11 @@ class Application {
   }
 
   static startGame(state = initialState) {
-    location.hash = `${ControllerId.GAME}?${saveState(state)}`;
+    Application.routes[ControllerId.GAME].init(state);
   }
 
   static loseGame(state) {
-    location.hash = `${ControllerId.LOSE}?${saveState(state)}`;
+    Application.routes[ControllerId.LOSE].init(state);
   }
 
   static winScreen(state) {
@@ -78,6 +82,18 @@ class Application {
   }
 }
 
-Application.init();
+/* Loader.loadData().
+    then(adaptData).
+    then((questData) => {
+      Application.init(questData);
+      preloadAudio(getUrlsArray(questData)).
+          then(() => Application.routes[ControllerId.WELCOME].letStart()).
+          catch(window.console.error);
+    }).catch(window.console.error);*/
+
+Loader.loadData().
+    then(adaptData).
+    then((questData) => Application.init(questData)).
+    catch(window.console.error);
 
 export default Application;

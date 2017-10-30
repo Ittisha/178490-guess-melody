@@ -23,6 +23,10 @@ class WelcomeScreen {
       App.startGame();
     };
   }
+
+/*  letStart() {
+    this.view.stopPreloader();
+  }*/
 }
 
 export default new WelcomeScreen();

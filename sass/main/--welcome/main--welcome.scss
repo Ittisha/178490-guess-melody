@@ -11,6 +11,27 @@
   }
 }
 
+@keyframes rotate {
+  0%    { transform: rotate(0deg); }
+  100%  { transform: rotate(360deg); }
+}
+
+.main-preloader {
+  top: 50%;
+  left: 50%;
+  position: absolute;
+  margin-left: -53px;
+  margin-top: -53px;
+  padding: 0;
+  height: 90px;
+  width: 90px;
+  animation: rotate 0.8s infinite linear;
+  background: transparent;
+  border: 8px solid $color-orange;
+  border-right-color: transparent;
+  border-radius: 50%;
+}
+
 .main-play {
   top: 360px;
   left: 330px;
@@ -27,6 +48,7 @@
   text-indent: -100em;
   transform-origin: center;
   width: 0;
+  // display: none;
 }
 
 .main-play:hover {
