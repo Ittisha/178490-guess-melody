@@ -1,3 +1,4 @@
+const WAITING_TIME = 60000;
 const QuestionType = {
   GENRE: `genre`,
   ARTIST: `artist`
@@ -28,7 +29,7 @@ const preloadAudio = (urls) => {
 
       setTimeout(() => {
         reject();
-      }, 5000);
+      }, WAITING_TIME);
     });
   }));
 };
