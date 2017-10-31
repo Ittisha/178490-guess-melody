@@ -25,12 +25,12 @@ class ArtistLevelView extends AbstractView {
   get template() {
     const levelTask = this.model.getQuestion();
     const answerVariants = [...levelTask.answers];
-    const rightSong = findRightSong(answerVariants);
+    const rightSong = levelTask.src ? levelTask.src : findRightSong(answerVariants).src;
 
     const question = `<h2 class="title main-title">${levelTask.taskMessage}</h2>
 <div class="player-wrapper">
   <div class="player">
-    <audio src="${rightSong.src}" autoplay></audio>
+    <audio src="${rightSong}" autoplay></audio>
     <button class="player-control player-control--pause"></button>
     <div class="player-track">
       <span class="player-status"></span>

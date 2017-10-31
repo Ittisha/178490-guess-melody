@@ -25,12 +25,13 @@ const getLevel = (levelIndex, data = games) => data[levelIndex];
 /**
  * Define next level state
  * @param {Object} state - This level state
+ * @param {Array} data - Array of game levels tasks
  * @return {Object} next level state
  */
-const nextLevel = (state) => {
+const nextLevel = (state, data = games) => {
   const next = state.questionIndex + 1;
 
-  if (!getLevel(next)) {
+  if (!getLevel(next, data)) {
     throw new RangeError(`Can't find level ${next}`);
   }
 
