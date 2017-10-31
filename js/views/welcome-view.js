@@ -49,6 +49,9 @@ class WelcomeView extends AbstractView {
     this.playButton.style.display = `block`;
   }
 
+  /**
+   * Show view for warnings
+   */
   showWarning() {
     const errorContainer = document.createElement(`div`);
     errorContainer.classList.add(`error-message`);
