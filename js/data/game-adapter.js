@@ -1,9 +1,20 @@
 const WAITING_TIME = 60000;
+
+/**
+ * Enum for question types
+ * @readonly
+ * @enum {string}
+ */
 const QuestionType = {
   GENRE: `genre`,
   ARTIST: `artist`
 };
 
+/**
+ * Get urls for audio
+ * @param {Array} data - Array of levels tasks
+ * @return {Array}
+ */
 const getUrlsArray = (data) => {
   const urls = data.map((question) => {
     if (question.src) {
@@ -15,6 +26,11 @@ const getUrlsArray = (data) => {
   return urls.reduce((previousValue, currentValue) => previousValue.concat(currentValue), []);
 };
 
+/**
+ * Preload audio
+ * @param {Array} urls
+ * @return {Promise.<*[]>}
+ */
 const preloadAudio = (urls) => {
   urls = urls.filter((url, index, self) => {
     return url !== `` && self.indexOf(url) === index;
@@ -34,6 +50,11 @@ const preloadAudio = (urls) => {
   }));
 };
 
+/**
+ * Prepreprocess artist answers
+ * @param {Array} answers
+ * @return {Array|*|{annotation}}
+ */
 const preprocessArtistAnswers = (answers) => {
   return answers.map((it) => ({
     artist: it.title,
@@ -42,6 +63,12 @@ const preprocessArtistAnswers = (answers) => {
   }));
 };
 
+/**
+ * Prepreprocess genre answers
+ * @param {string} genre
+ * @param {Array} answers
+ * @return {Array|*|{annotation}}
+ */
 const preprocessGenreAnswers = (genre, answers) => {
   return answers.map((it) => ({
     src: it.src,
@@ -50,6 +77,11 @@ const preprocessGenreAnswers = (genre, answers) => {
   }));
 };
 
+/**
+ * Adapt data
+ * @param {Array} data
+ * @return {Array|*|{annotation}}
+ */
 const adaptData = (data) => {
   return data.map((it) => {
     const adaptedLevelData = {};
