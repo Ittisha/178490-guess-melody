@@ -1,9 +1,15 @@
-import {getPlayerResult} from '../game/game-utils';
+import {getPlayerResults} from '../game/game-utils';
 import {changeView} from '../render-screen';
-import statistics from '../data/statistics';
 import WinView from '../views/win-view';
 import {getWinMessages} from '../results/get-result-data';
 import App from '../application';
+import ModalWindow from './modal-window';
+import Loader from '../data/loader';
+
+const Messages = {
+  SUCCESS: `Ваши результаты успешно отправлены на сервер`,
+  ERROR: `Сожалеем, но ваш результат сохранить не удалось`
+};
 
 /**
  * Class representing win screen
@@ -11,10 +17,14 @@ import App from '../application';
 class WinScreen {
   /**
    * Initiate win screen
+   * @param {Array} statistics
    * @param {Object} state
+   *
    */
-  init(state) {
-    this.result = getWinMessages(statistics, getPlayerResult(state));
+  init(statistics, state) {
+    const stats = statistics.map((it) => it.score);
+
+    this.result = getWinMessages(stats, getPlayerResults(state));
     this.view = new WinView(this.result);
 
     this.view.onReplay = (evt) => {
@@ -23,6 +33,10 @@ class WinScreen {
     };
 
     changeView(this.view);
+
+    Loader.saveResults().
+        then(() => new ModalWindow(Messages.SUCCESS, false).init(),
+            () => new ModalWindow(Messages.ERROR).init());
   }
 }
 

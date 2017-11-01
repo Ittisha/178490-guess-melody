@@ -2,7 +2,7 @@ import statistics from '../data/statistics';
 import LossView from '../views/loss-screen-view';
 import {changeView} from '../render-screen';
 import {getLossMessages} from '../results/get-result-data';
-import {getPlayerResult} from '../game/game-utils';
+import {getPlayerResults} from '../game/game-utils';
 import App from '../application';
 
 /**
@@ -15,7 +15,7 @@ class LossScreen {
    * @param {Object} state
    */
   init(state) {
-    this.result = getLossMessages(statistics, getPlayerResult(state));
+    this.result = getLossMessages(statistics, getPlayerResults(state));
     this.view = new LossView(this.result);
 
     this.view.onReplay = () => {
