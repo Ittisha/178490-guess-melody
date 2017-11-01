@@ -5,6 +5,7 @@ import {getWinMessages} from '../results/get-result-data';
 import App from '../application';
 import ModalWindow from './modal-window';
 import Loader from '../data/loader';
+import {preprocessResult} from '../data/game-adapter';
 
 const Messages = {
   SUCCESS: `Ваши результаты успешно отправлены на сервер`,
@@ -34,7 +35,7 @@ class WinScreen {
 
     changeView(this.view);
 
-    Loader.saveResults().
+    Loader.saveResults(preprocessResult(state)).
         then(() => new ModalWindow(Messages.SUCCESS, false).init(),
             () => new ModalWindow(Messages.ERROR).init());
   }
