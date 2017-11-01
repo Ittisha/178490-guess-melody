@@ -4,9 +4,10 @@ import {initialState} from './data/initial-data';
 import loseGameScreen from './screens/loss-screen';
 import winGameScreen from './screens/win-screen';
 import Loader from './data/loader';
-import {
-  adaptData, preloadAudio, getUrlsArray
-} from './data/game-adapter';
+import {adaptData, preloadAudio, getUrlsArray} from './data/game-adapter';
+import ModalWindow from './screens/modal-window';
+
+const ERROR_MESSAGE = `Сервер временно не доступен`;
 
 const ControllerId = {
   WELCOME: ``,
@@ -84,6 +85,8 @@ Loader.loadData().
           then(() => Application.routes[ControllerId.WELCOME].letStart(),
               () => Application.routes[ControllerId.WELCOME].showWarning()).
           catch(window.console.error);
-    }).catch(window.console.error);
+    },
+    () => new ModalWindow(ERROR_MESSAGE).init()).
+    catch(window.console.error);
 
 export default Application;
