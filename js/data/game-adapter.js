@@ -1,3 +1,6 @@
+import {getPlayerResults} from '../game/game-utils';
+import {initialState} from './initial-data';
+
 const WAITING_TIME = 60000;
 
 /**
@@ -36,18 +39,16 @@ const preloadAudio = (urls) => {
     return url !== `` && self.indexOf(url) === index;
   });
 
-  return Promise.all(urls.map((url) => {
-    return new Promise((resolve, reject) => {
-      const audio = new Audio();
-      audio.addEventListener(`canplaythrough`, resolve, false);
-      audio.preload = `auto`;
-      audio.src = url;
+  return Promise.all(urls.map((url) => new Promise((resolve, reject) => {
+    const audio = new Audio();
+    audio.addEventListener(`canplaythrough`, resolve, false);
+    audio.src = url;
 
-      setTimeout(() => {
-        reject();
-      }, WAITING_TIME);
-    });
-  }));
+    setTimeout(() => {
+      reject();
+    }, WAITING_TIME);
+  })
+  ));
 };
 
 /**
@@ -105,4 +106,11 @@ const adaptData = (data) => {
   });
 };
 
-export {adaptData, preloadAudio, getUrlsArray};
+const preprocessResult = (state) => {
+  const {remainingTime, score} = getPlayerResults(state);
+
+  return {time: initialState.timeLeft - remainingTime,
+    score};
+};
+
+export {adaptData, preloadAudio, getUrlsArray, preprocessResult};

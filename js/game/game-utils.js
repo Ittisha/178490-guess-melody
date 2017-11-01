@@ -62,7 +62,7 @@ const addPlayerAnswer = (state, answer) => {
  * @param {Object} state
  * @return {Object} player result
  */
-const getPlayerResult = (state) => ({
+const getPlayerResults = (state) => ({
   score: countUpScores(state.playerAnswers, state.lives),
   remainingLives: state.lives,
   remainingTime: state.timeLeft,
@@ -86,6 +86,6 @@ export {getLevel,
   nextLevel,
   setLives,
   addPlayerAnswer,
-  getPlayerResult,
+  getPlayerResults,
   updateGameTime
 };

@@ -5,21 +5,15 @@ import loseGameScreen from './screens/loss-screen';
 import winGameScreen from './screens/win-screen';
 import Loader from './data/loader';
 import {adaptData, preloadAudio, getUrlsArray} from './data/game-adapter';
+import ModalWindow from './screens/modal-window';
+
+const ERROR_MESSAGE = `Сервер временно не доступен`;
 
 const ControllerId = {
   WELCOME: ``,
   GAME: `game`,
   LOSE: `lose`,
   RESULT: `result`
-};
-
-/**
- * Save encoding state
- * @param {Object} state
- * @return {string}
- */
-const saveState = (state) => {
-  return window.btoa(encodeURIComponent(JSON.stringify(state)));
 };
 
 /**
@@ -78,7 +72,8 @@ class Application {
   }
 
   static winScreen(state) {
-    location.hash = `${ControllerId.RESULT}?${saveState(state)}`;
+    Loader.loadResult().then((stats) => Application.routes[ControllerId.RESULT].init(stats, state),
+        () => Application.routes[ControllerId.RESULT].init([], state));
   }
 }
 
@@ -90,6 +85,8 @@ Loader.loadData().
           then(() => Application.routes[ControllerId.WELCOME].letStart(),
               () => Application.routes[ControllerId.WELCOME].showWarning()).
           catch(window.console.error);
-    }).catch(window.console.error);
+    },
+    () => new ModalWindow(ERROR_MESSAGE).init()).
+    catch(window.console.error);
 
 export default Application;
