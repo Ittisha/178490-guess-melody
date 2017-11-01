@@ -1,6 +1,6 @@
 import assert from 'assert';
 import {initialState} from "../data/initial-data";
-import getStrokeOffset from '../get-stroke-offset';
+import getStrokeOffset from '../utils/get-stroke-offset';
 
 describe(`Function should correctly calculate stroke offset`, () => {
   describe(`Normal cases`, () => {

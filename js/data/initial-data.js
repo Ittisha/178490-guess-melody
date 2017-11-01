@@ -1,6 +1,3 @@
-import audios from './audio';
-import {createGameTasks} from './levels-data-creation';
-
 const CRITICAL_TIME = 30000;
 
 const initialState = Object.freeze({
@@ -11,6 +8,4 @@ const initialState = Object.freeze({
   playerAnswers: [],
 });
 
-const games = createGameTasks(audios, initialState.questionsLeftNumber);
-
-export {initialState, games, CRITICAL_TIME};
+export {initialState, CRITICAL_TIME};

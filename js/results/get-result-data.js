@@ -1,6 +1,6 @@
 import outputResultMessage from './outputting-result';
 import {initialState} from '../data/initial-data';
-import {formatTime, getNounPluralForm} from '../utils';
+import {formatTime, getNounPluralForm} from '../utils/utils';
 
 /**
  * Enum for russian words plural forms
@@ -17,21 +17,20 @@ const WordForm = {
 
 /**
  * Get loss message
- * @param {Array} stats - Other players statistics
  * @param {Object} playerStats - Current player statistics
  * @return {Object} object with message title and text
  */
-const getLossMessages = (stats, playerStats) => {
+const getLossMessages = (playerStats) => {
   if (playerStats.remainingLives === -1) {
     return {
       title: `Какая жалость!`,
-      text: outputResultMessage(stats, playerStats)
+      text: outputResultMessage([], playerStats)
     };
   }
 
   return {
     title: `Увы и ах!`,
-    text: outputResultMessage(stats, playerStats)
+    text: outputResultMessage([], playerStats)
   };
 
 };

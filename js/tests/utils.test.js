@@ -1,5 +1,5 @@
 import assert from 'assert';
-import {getNounPluralForm} from '../utils';
+import {getNounPluralForm} from '../utils/utils';
 
 suite(`Test getNounPluralForm`, () => {
   test(`Should return correct plural word form`, () => {

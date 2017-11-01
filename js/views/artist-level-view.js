@@ -1,9 +1,9 @@
 import AbstractView from './abstract-view';
 import {CRITICAL_TIME} from '../data/initial-data';
 import getGameHeaderTemplate from '../views/game-header';
-import {findRightSong, formatTime, switchPlayPause} from '../utils';
-import {addZeroInFront} from '../utils';
-import getStrokeOffset from '../get-stroke-offset';
+import {findRightSong, formatTime, switchPlayPause} from '../utils/utils';
+import {addZeroInFront} from '../utils/utils';
+import getStrokeOffset from '../utils/get-stroke-offset';
 
 /** Class representing artist level view
  * @extends AbstractView

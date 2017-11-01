@@ -1,5 +1,4 @@
 import {addPlayerAnswer, nextLevel, setLives, updateGameTime} from './game-utils';
-import {games} from '../data/initial-data';
 
 /** Class representing game model*/
 class GameModel {
@@ -7,7 +6,7 @@ class GameModel {
    * Create new game
    * @param {Array} data - Contains games data
    */
-  constructor(data = games) {
+  constructor(data) {
     this.data = data;
   }
 

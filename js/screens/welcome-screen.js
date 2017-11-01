@@ -1,9 +1,12 @@
 import WelcomeView from '../views/welcome-view';
-import {changeView} from '../render-screen';
+import {changeView} from '../utils/render-screen';
 import App from '../application';
 import ModalWindow from "./modal-window";
 import Preloader from "./preloader";
 
+const MESSAGE = `Сожалеем, у нас не получилось заранее
+    загрузить все необходимые данные. Но вы можете начать игру на
+    свой страх и риск.`;
 /**
  * Class representing welcome screen
  */
@@ -34,11 +37,7 @@ class WelcomeScreen {
   }
 
   showWarning() {
-    const message = `Сожалеем, у нас не получилось заранее
-    загрузить все необходимые данные. Но вы можете начать игру на
-    свой страх и риск.`;
-
-    const preloaderResultModal = new ModalWindow(message);
+    const preloaderResultModal = new ModalWindow(MESSAGE);
 
     preloaderResultModal.init();
     this.letStart();

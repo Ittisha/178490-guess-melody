@@ -1,4 +1,4 @@
-import {getNounPluralForm} from '../utils';
+import {getNounPluralForm} from '../utils/utils';
 
 const WORD_PLAYER_FORMS = [`игрока`, `игроков`, `игроков`];
 

@@ -4,11 +4,16 @@ import {initialState} from './data/initial-data';
 import loseGameScreen from './screens/loss-screen';
 import winGameScreen from './screens/win-screen';
 import Loader from './data/loader';
-import {adaptData, preloadAudio, getUrlsArray} from './data/game-adapter';
+import {adaptData, preloadAudio, getUrlsArray} from './data/data-adapter';
 import ModalWindow from './screens/modal-window';
 
 const ERROR_MESSAGE = `Сервер временно не доступен`;
 
+/**
+ * Enum for controller id
+ * @readonly
+ * @enum {Array}
+ */
 const ControllerId = {
   WELCOME: ``,
   GAME: `game`,
@@ -23,7 +28,7 @@ const ControllerId = {
  */
 const loadState = (dataString) => {
   try {
-    return JSON.parse(decodeURIComponent(window.atob(dataString)));
+    return JSON.parse(dataString);
   } catch (e) {
     return initialState;
   }
@@ -59,10 +64,6 @@ class Application {
     }
   }
 
-  static showWelcome() {
-    location.hash = ControllerId.WELCOME;
-  }
-
   static startGame(state = initialState) {
     Application.routes[ControllerId.GAME].init(state);
   }
@@ -83,10 +84,8 @@ Loader.loadData().
       Application.init(questData);
       preloadAudio(getUrlsArray(questData)).
           then(() => Application.routes[ControllerId.WELCOME].letStart(),
-              () => Application.routes[ControllerId.WELCOME].showWarning()).
-          catch(window.console.error);
-    },
-    () => new ModalWindow(ERROR_MESSAGE).init()).
-    catch(window.console.error);
+              () => Application.routes[ControllerId.WELCOME].showWarning());
+    }).
+    catch(() => new ModalWindow(ERROR_MESSAGE).init());
 
 export default Application;
