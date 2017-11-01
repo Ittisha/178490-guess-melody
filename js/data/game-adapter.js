@@ -1,3 +1,6 @@
+import {getPlayerResults} from '../game/game-utils';
+import {initialState} from './initial-data';
+
 const WAITING_TIME = 60000;
 
 /**
@@ -39,7 +42,7 @@ const preloadAudio = (urls) => {
   return Promise.all(urls.map((url) => {
     return new Promise((resolve, reject) => {
       const audio = new Audio();
-      audio.addEventListener(`canplaythrough`, resolve, false);
+      audio.addEventListener(`suspend`, resolve, false);
       audio.preload = `auto`;
       audio.src = url;
 
@@ -48,6 +51,29 @@ const preloadAudio = (urls) => {
       }, WAITING_TIME);
     });
   }));
+
+/*  const fetchAndCache = (url, cache) => {
+    return cache.match(url)
+        .then((cacheResponse) => {
+
+          if (cacheResponse) {
+            return cacheResponse;
+          }
+
+          return fetch(url)
+              .then((networkResponse) => {
+
+                cache.put(url, networkResponse.clone());
+                return networkResponse;
+              });
+        });
+  };
+
+  return new Promise((resolve) => window.caches.open(`audio-pre-cache`)
+      .then((cache) => Promise.all(urls.map((url) => fetchAndCache(url, cache)))).
+    then(() => resolve()));*/
+
+
 };
 
 /**
@@ -105,4 +131,11 @@ const adaptData = (data) => {
   });
 };
 
-export {adaptData, preloadAudio, getUrlsArray};
+const preprocessResult = (state) => {
+  const {remainingTime, score} = getPlayerResults(state);
+
+  return {time: initialState.timeLeft - remainingTime,
+    score};
+};
+
+export {adaptData, preloadAudio, getUrlsArray, preprocessResult};
