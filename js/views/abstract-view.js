@@ -1,4 +1,4 @@
-import getHtmlFromTemplate from '../get-html-from-template';
+import getHtmlFromTemplate from '../utils/get-html-from-template';
 
 /** Class representing welcome view*/
 class AbstractView {

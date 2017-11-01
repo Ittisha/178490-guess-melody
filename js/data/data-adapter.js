@@ -44,6 +44,21 @@ const preloadAudio = (urls) => {
     audio.addEventListener(`canplaythrough`, resolve, false);
     audio.src = url;
 
+    /**
+     * Repeat audio preload
+     */
+    const repeatAudioLoading = () => {
+      setTimeout(() => {
+
+        if (audio.readyState < 4) {
+          audio.src = url;
+          repeatAudioLoading();
+        }
+      }, 10000);
+    };
+
+    repeatAudioLoading();
+
     setTimeout(() => {
       reject();
     }, WAITING_TIME);

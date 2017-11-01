@@ -1,11 +1,11 @@
 import GameModel from '../game/game-model';
 import ArtistLevelView from '../views/artist-level-view';
-import {games, initialState} from '../data/initial-data';
-import {changeView} from '../render-screen';
+import {initialState} from '../data/initial-data';
+import {changeView} from '../utils/render-screen';
 import GenreLevelView from '../views/genre-level-view';
-import PlayerAnswer from '../classes/player-answer-class';
+import PlayerAnswer from '../utils/player-answer-class';
 import App from '../application';
-import Timer from '../classes/timer-class';
+import Timer from '../utils/timer-class';
 
 /**
  * Class representing game presenter
@@ -15,7 +15,7 @@ class GameScreen {
    * Create new game presenter
    * @param {Array} data - Contains games data
    */
-  constructor(data = games) {
+  constructor(data) {
     this.model = new GameModel(data);
   }
 
@@ -59,7 +59,7 @@ class GameScreen {
   changeLevel() {
     this.model.startTime = this.model.state.timeLeft;
 
-    const levelData = this.model.getQuestion(games);
+    const levelData = this.model.getQuestion();
     const GameView = levelData.type === `artist` ? ArtistLevelView : GenreLevelView;
     this.level = new GameView(this.model);
 

@@ -1,5 +1,5 @@
 import assert from 'assert';
-import Timer from '../classes/timer-class';
+import Timer from '../utils/timer-class';
 
 suite(`Timer test`, () => {
   test(`Should create new timer with given remaining time`, () => {

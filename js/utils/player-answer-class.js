@@ -5,7 +5,7 @@ class PlayerAnswer {
    * @param {boolean} boolean -  was the answer true or false
    * @param {number} time - Time spent on the answer
    */
-  constructor(boolean, time = 30000) {
+  constructor(boolean, time) {
     this.isRightAnswer = boolean;
     this.time = time;
   }

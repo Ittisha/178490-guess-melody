@@ -1,4 +1,3 @@
-import {games} from '../data/initial-data';
 import {countUpScores} from '../results/scoring';
 import {getQuickAnswersScore} from '../results/scoring';
 
@@ -20,7 +19,7 @@ const setLives = (state, lives) => {
  * @param {Array} data
  * @return {Object} level data
  */
-const getLevel = (levelIndex, data = games) => data[levelIndex];
+const getLevel = (levelIndex, data) => data[levelIndex];
 
 /**
  * Define next level state
@@ -28,7 +27,7 @@ const getLevel = (levelIndex, data = games) => data[levelIndex];
  * @param {Array} data - Array of game levels tasks
  * @return {Object} next level state
  */
-const nextLevel = (state, data = games) => {
+const nextLevel = (state, data) => {
   const next = state.questionIndex + 1;
 
   if (!getLevel(next, data)) {

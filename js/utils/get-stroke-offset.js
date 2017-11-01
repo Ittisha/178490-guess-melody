@@ -1,4 +1,4 @@
-import {initialState} from './data/initial-data';
+import {initialState} from '../data/initial-data';
 
 /**
  * Get length for stroke-dashoffset

@@ -1,6 +1,6 @@
 import {initialState} from '../data/initial-data';
-import {addZeroInFront, formatTime} from '../utils';
-import getStrokeOffset from '../get-stroke-offset';
+import {addZeroInFront, formatTime} from '../utils/utils';
+import getStrokeOffset from '../utils/get-stroke-offset';
 
 const TIMER_RADIUS = 370;
 

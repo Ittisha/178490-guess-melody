@@ -65,29 +65,6 @@ const getNounPluralForm = (number, nounForms) => {
 };
 
 /**
- * Returns random integer between min and max inclusive
- * @param {number} min
- * @param{number} max
- * @return {number}
- */
-const getRandomInteger = (min, max) => Math.floor(Math.random() *
-  (max + 1 - min) + min);
-
-/**
- * Returns unique random array item
- * @param {Array} array
- * @return {*}
- */
-const getUniqueArrayItem = (array) => array.splice(getRandomInteger(0, array.length - 1), 1)[0];
-
-/**
- * Returns random array item
- * @param {Array} array
- * @return {*}
- */
-const getRandomArrayItem = (array) => array[getRandomInteger(0, array.length - 1)];
-
-/**
  * Check if all right answers are chosen
  * @param {Array} inputsChecked
  * @return {boolean}
@@ -152,9 +129,6 @@ const switchPlayPause = (player) => {
 export {
   clearNode,
   getNounPluralForm,
-  getUniqueArrayItem,
-  getRandomArrayItem,
-  getRandomInteger,
   findRightSong,
   isRightGenreChecked,
   addZeroInFront,

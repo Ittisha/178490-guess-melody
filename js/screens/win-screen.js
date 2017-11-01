@@ -1,12 +1,17 @@
 import {getPlayerResults} from '../game/game-utils';
-import {changeView} from '../render-screen';
+import {changeView} from '../utils/render-screen';
 import WinView from '../views/win-view';
 import {getWinMessages} from '../results/get-result-data';
 import App from '../application';
 import ModalWindow from './modal-window';
 import Loader from '../data/loader';
-import {preprocessResult} from '../data/game-adapter';
+import {preprocessResult} from '../data/data-adapter';
 
+/**
+ * Enum for saving stats results
+ * @readonly
+ * @enum {string}
+ */
 const Messages = {
   SUCCESS: `Ваши результаты успешно отправлены на сервер`,
   ERROR: `Сожалеем, но ваш результат сохранить не удалось`
