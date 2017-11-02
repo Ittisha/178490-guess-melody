@@ -22,20 +22,6 @@ const ControllerId = {
 };
 
 /**
- * Load decoding state
- * @param {string} dataString
- * @return {Object}
- */
-const loadState = (dataString) => {
-  try {
-    return JSON.parse(dataString);
-  } catch (e) {
-    return initialState;
-  }
-};
-
-
-/**
  * Class representing application
  */
 class Application {
@@ -57,10 +43,10 @@ class Application {
 
   }
 
-  static changeHash(id, state) {
+  static changeHash(id) {
     const controller = Application.routes[id];
     if (controller) {
-      controller.init(loadState(state));
+      controller.init();
     }
   }
 

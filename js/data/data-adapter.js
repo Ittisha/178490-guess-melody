@@ -1,7 +1,14 @@
 import {getPlayerResults} from '../game/game-utils';
 import {initialState} from './initial-data';
 
-const WAITING_TIME = 60000;
+/** @constant {number} */
+const PRELOAD_WAITING_TIME = 60000;
+
+/** @constant {number} */
+const SECOND_ATTEMPT_INTERVAL = 30000;
+
+/** @constant {number} */
+const HAVE_ENOUGH_DATA_STATE = 4;
 
 /**
  * Enum for question types
@@ -50,18 +57,17 @@ const preloadAudio = (urls) => {
     const repeatAudioLoading = () => {
       setTimeout(() => {
 
-        if (audio.readyState < 4) {
+        if (audio.readyState < HAVE_ENOUGH_DATA_STATE) {
           audio.src = url;
-          repeatAudioLoading();
         }
-      }, 10000);
+      }, SECOND_ATTEMPT_INTERVAL);
     };
 
     repeatAudioLoading();
 
     setTimeout(() => {
       reject();
-    }, WAITING_TIME);
+    }, PRELOAD_WAITING_TIME);
   })
   ));
 };
@@ -121,6 +127,11 @@ const adaptData = (data) => {
   });
 };
 
+/**
+ * Preprocess player result for saving
+ * @param {Object} state
+ * @return {Object}
+ */
 const preprocessResult = (state) => {
   const {remainingTime, score} = getPlayerResults(state);
 

@@ -29,6 +29,9 @@ class WinView extends AbstractView {
 </section>`.trim();
   }
 
+  /**
+   * Bind callback to restart button click
+   */
   bind() {
     const restartButton = this.element.querySelector(`.main-replay`);
     /**
@@ -36,15 +39,18 @@ class WinView extends AbstractView {
      * @param {Object} evt
      */
     const onRestartButtonClick = (evt) => {
-      this.onReplay(evt);
+      evt.preventDefault();
+      this.onReplay();
       restartButton.removeEventListener(`click`, onRestartButtonClick);
     };
 
     restartButton.addEventListener(`click`, onRestartButtonClick);
   }
 
-  onReplay(evt) {
-    return evt;
+  /**
+   * Do on restart button click
+   */
+  onReplay() {
   }
 }
 

@@ -33,8 +33,7 @@ class WinScreen {
     this.result = getWinMessages(stats, getPlayerResults(state));
     this.view = new WinView(this.result);
 
-    this.view.onReplay = (evt) => {
-      evt.preventDefault();
+    this.view.onReplay = () => {
       App.startGame();
     };
 

@@ -1,5 +1,6 @@
 import {getNounPluralForm} from '../utils/utils';
 
+/** @constant {Array} */
 const WORD_PLAYER_FORMS = [`игрока`, `игроков`, `игроков`];
 
 /**

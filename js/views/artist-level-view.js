@@ -106,10 +106,16 @@ ${getGameHeaderTemplate(this.model.state)}
     playerButton.addEventListener(`click`, onPlayerButtonCLick);
   }
 
+  /**
+   * Do on right answer
+   */
   onSuccess() {
 
   }
 
+  /**
+   * Do on wrong answer
+   */
   onMistake() {
 
   }
@@ -119,7 +125,7 @@ ${getGameHeaderTemplate(this.model.state)}
    * @param {number} time - New time
    */
   updateTime(time) {
-    this.addBlinking(time);
+    this._addBlinking(time);
     const {minutes, seconds} = formatTime(time);
     const radius = this.timerLine.r.animVal.value;
 
@@ -133,7 +139,7 @@ ${getGameHeaderTemplate(this.model.state)}
    * Add time blinking
    * @param {number} time - Remaining time
    */
-  addBlinking(time) {
+  _addBlinking(time) {
     if (time < CRITICAL_TIME && !this.timerContainer.classList.contains(`timer-value--finished`)) {
       this.timerContainer.classList.add(`timer-value--finished`);
     }

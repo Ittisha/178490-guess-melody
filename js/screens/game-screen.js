@@ -7,6 +7,8 @@ import PlayerAnswer from '../utils/player-answer-class';
 import App from '../application';
 import Timer from '../utils/timer-class';
 
+/** @constant {number} */
+const TIMER_INTERVAL = 1000;
 /**
  * Class representing game presenter
  */
@@ -37,26 +39,26 @@ class GameScreen {
 
         if (newTime === -1) {
           App.loseGame(this.model.state);
-          this.resetTimer();
+          this._resetTimer();
         }
 
         this.level.updateTime(newTime);
 
         startTimer();
-      }, 1000);
+      }, TIMER_INTERVAL);
     };
 
     if (!this.gameTimer) {
       startTimer();
     }
 
-    this.changeLevel();
+    this._changeLevel();
   }
 
   /**
    * Change game levels
    */
-  changeLevel() {
+  _changeLevel() {
     this.model.startTime = this.model.state.timeLeft;
 
     const levelData = this.model.getQuestion();
@@ -69,13 +71,13 @@ class GameScreen {
 
       if (!this.model.canPlay()) {
         App.loseGame(this.model.state);
-        this.resetTimer();
+        this._resetTimer();
         return;
       }
 
       if (this.model.state.questionsLeftNumber === 1) {
         App.winScreen(this.model.state);
-        this.resetTimer();
+        this._resetTimer();
         return;
       }
 
@@ -89,7 +91,7 @@ class GameScreen {
 
       if (this.model.state.questionsLeftNumber === 1) {
         App.winScreen(this.model.state);
-        this.resetTimer();
+        this._resetTimer();
         return;
       }
 
@@ -101,7 +103,7 @@ class GameScreen {
     changeView(this.level);
   }
 
-  resetTimer() {
+  _resetTimer() {
     clearTimeout(this.gameTimer);
     this.gameTimer = void (0);
   }
