@@ -2,6 +2,7 @@ import {initialState} from '../data/initial-data';
 import {addZeroInFront, formatTime} from '../utils/utils';
 import getStrokeOffset from '../utils/get-stroke-offset';
 
+/** @constant {number} */
 const TIMER_RADIUS = 370;
 
 /**

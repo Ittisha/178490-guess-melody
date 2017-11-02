@@ -3,6 +3,9 @@ import getHtmlFromTemplate from '../utils/get-html-from-template';
 /** Class representing welcome view*/
 class AbstractView {
 
+  /**
+   * Method for getting string template
+   */
   get template() {
     throw new Error(`Method should be defined in subclasses`);
   }
@@ -11,10 +14,13 @@ class AbstractView {
    * Creates DOM-element from template
    * @return {Element}
    */
-  render() {
+  _render() {
     return getHtmlFromTemplate(this.template);
   }
 
+  /**
+   * Bind callback
+   */
   bind() {}
 
   /**
@@ -23,7 +29,7 @@ class AbstractView {
    */
   get element() {
     if (!this._element) {
-      this.getMarkup();
+      this._getMarkup();
     }
     return this._element;
 
@@ -32,8 +38,8 @@ class AbstractView {
   /**
    * Method for getting node and binding listeners
    */
-  getMarkup() {
-    this._element = this.render();
+  _getMarkup() {
+    this._element = this._render();
     this.bind();
   }
 }

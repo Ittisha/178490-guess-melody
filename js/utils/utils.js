@@ -1,6 +1,13 @@
-const SECONDS_IN_ONE_MINUTE = 60;
-const MILLISECONDS_IN_ONE_SECOND = 1000;
-const MILLISECONDS_IN_ONE_MINUTE = SECONDS_IN_ONE_MINUTE * MILLISECONDS_IN_ONE_SECOND;
+/**
+ * Enum time converting
+ * @readonly
+ * @enum {number}
+ */
+const TimeConverting = {
+  SECONDS_IN_ONE_MINUTE: 60,
+  MILLISECONDS_IN_ONE_SECOND: 1000,
+  MILLISECONDS_IN_ONE_MINUTE: 60000
+};
 
 /**
  * Enum for russian words plural forms rule
@@ -88,8 +95,8 @@ const findRightSong = (songs) => {
  * @return {Object} Time object with minutes and seconds
  */
 const formatTime = (milliseconds) => ({
-  minutes: Math.floor(milliseconds / MILLISECONDS_IN_ONE_MINUTE),
-  seconds: milliseconds % MILLISECONDS_IN_ONE_MINUTE / MILLISECONDS_IN_ONE_SECOND
+  minutes: Math.floor(milliseconds / TimeConverting.MILLISECONDS_IN_ONE_MINUTE),
+  seconds: milliseconds % TimeConverting.MILLISECONDS_IN_ONE_MINUTE / TimeConverting.MILLISECONDS_IN_ONE_SECOND
 });
 
 /**
@@ -121,9 +128,9 @@ const pauseAudio = (buttons, targetButton) => {
 const switchPlayPause = (player) => {
   if (player.paused) {
     player.play();
-  } else {
-    player.pause();
+    return;
   }
+  player.pause();
 };
 
 export {

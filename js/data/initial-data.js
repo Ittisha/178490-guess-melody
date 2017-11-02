@@ -1,3 +1,4 @@
+/** @constant {number} */
 const CRITICAL_TIME = 30000;
 
 const initialState = Object.freeze({

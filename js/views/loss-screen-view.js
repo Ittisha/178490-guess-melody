@@ -29,6 +29,9 @@ class LossView extends AbstractView {
 </section>`.trim();
   }
 
+  /**
+   * Bind callback on restart button click
+   */
   bind() {
     const restartButton = this.element.querySelector(`.main-replay`);
     /**
@@ -44,6 +47,9 @@ class LossView extends AbstractView {
     restartButton.addEventListener(`click`, onRestartButtonClick);
   }
 
+  /**
+   * Do on replay button click
+   */
   onReplay() {
 
   }

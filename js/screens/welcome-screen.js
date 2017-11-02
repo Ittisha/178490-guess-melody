@@ -4,9 +4,11 @@ import App from '../application';
 import ModalWindow from "./modal-window";
 import Preloader from "./preloader";
 
+/** @constant {string} */
 const MESSAGE = `Сожалеем, у нас не получилось заранее
     загрузить все необходимые данные. Но вы можете начать игру на
     свой страх и риск.`;
+
 /**
  * Class representing welcome screen
  */
@@ -31,11 +33,17 @@ class WelcomeScreen {
     };
   }
 
+  /**
+   * Remove preloader activate start button
+   */
   letStart() {
     this.preloader.remove();
     this.view.showButton();
   }
 
+  /**
+   * Show warning message
+   */
   showWarning() {
     const preloaderResultModal = new ModalWindow(MESSAGE);
 

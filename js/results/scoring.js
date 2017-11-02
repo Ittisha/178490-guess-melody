@@ -1,8 +1,16 @@
-const ANSWERS_NUMBER = 10;
-const TIME_FOR_QUICK_ANSWER = 30000;
-const PENALTY = -2;
-const QUICK_ANSWER_SCORE = +2;
-const SLOW_ANSWER_SCORE = +1;
+/**
+ * Enum answer properties
+ * @readonly
+ * @enum {number}
+ */
+const Answer = {
+  QUANTITY: 10,
+  QUICK_TIME: 30000,
+  PENALTY: -2,
+  QUICK_ANSWER_SCORE: +2,
+  SLOW_ANSWER_SCORE: +1
+};
+
 
 /**
  * Get score for particular answer
@@ -12,12 +20,12 @@ const SLOW_ANSWER_SCORE = +1;
  */
 const getAnswerScore = (time, truth) => {
   if (!truth) {
-    return PENALTY;
+    return Answer.PENALTY;
   }
-  if (time < TIME_FOR_QUICK_ANSWER) {
-    return QUICK_ANSWER_SCORE;
+  if (time < Answer.QUICK_TIME) {
+    return Answer.QUICK_ANSWER_SCORE;
   }
-  return SLOW_ANSWER_SCORE;
+  return Answer.SLOW_ANSWER_SCORE;
 };
 
 /**
@@ -27,7 +35,7 @@ const getAnswerScore = (time, truth) => {
  * @return {number} Player's total score
  */
 const countUpScores = (playerAnswers, remainingNotes) => {
-  if (playerAnswers.length < ANSWERS_NUMBER || remainingNotes < 0) {
+  if (playerAnswers.length < Answer.QUANTITY || remainingNotes < 0) {
     return -1;
   }
 
@@ -37,9 +45,9 @@ const countUpScores = (playerAnswers, remainingNotes) => {
 };
 
 const getQuickAnswersScore = (playerAnswers) => {
-  return playerAnswers.filter((answer) => answer.isRightAnswer && (answer.time < TIME_FOR_QUICK_ANSWER))
+  return playerAnswers.filter((answer) => answer.isRightAnswer && (answer.time < Answer.QUICK_TIME))
       .reduce((score) => {
-        return score + QUICK_ANSWER_SCORE;
+        return score + Answer.QUICK_ANSWER_SCORE;
       }, 0);
 };
 
