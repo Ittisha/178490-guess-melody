@@ -15,7 +15,7 @@ class ArtistLevelView extends AbstractView {
    */
   constructor(model) {
     super();
-    this.model = model;
+    this._model = model;
   }
 
   /**
@@ -23,7 +23,7 @@ class ArtistLevelView extends AbstractView {
    * @return {string} - String template for html-markup
    */
   get template() {
-    const levelTask = this.model.getQuestion();
+    const levelTask = this._model.getQuestion();
     const answerVariants = [...levelTask.answers];
     const rightSong = levelTask.src ? levelTask.src : findRightSong(answerVariants).src;
 
@@ -39,7 +39,7 @@ class ArtistLevelView extends AbstractView {
 </div>`;
 
     const answers = answerVariants.map((song, index) => `<div class="main-answer-wrapper">
-  <input class="main-answer-r" type="radio" id="answer-${index}" ${song.isRightAnswer ? `data-isRightAnswer` : ``} name="answer" value="val-${this.model.state.questionIndex + 1}"/>
+  <input class="main-answer-r" type="radio" id="answer-${index}" ${song.isRightAnswer ? `data-isRightAnswer` : ``} name="answer" value="val-${this._model.state.questionIndex + 1}"/>
   <label class="main-answer" for="answer-${index}">
   <img class="main-answer-preview" src="${song.image}"
 alt="${song.artist}" width="134" height="134">
@@ -48,7 +48,7 @@ alt="${song.artist}" width="134" height="134">
 </div>`).join(``);
 
     return `<section class="main main--level main--level-artist">
-${getGameHeaderTemplate(this.model.state)}
+${getGameHeaderTemplate(this._model.state)}
   <div class="main-wrap">
   ${question}
     <form class="main-list">
@@ -63,11 +63,11 @@ ${getGameHeaderTemplate(this.model.state)}
    */
   bind() {
     const answerContainer = this.element;
-    this.timerContainer = answerContainer.querySelector(`.timer-value`);
-    this.timeSeconds = this.timerContainer.querySelector(`.timer-value-secs`);
-    this.timeMinutes = this.timerContainer.querySelector(`.timer-value-mins`);
+    this._timerContainer = answerContainer.querySelector(`.timer-value`);
+    this._timeSeconds = this._timerContainer.querySelector(`.timer-value-secs`);
+    this._timeMinutes = this._timerContainer.querySelector(`.timer-value-mins`);
 
-    this.timerLine = answerContainer.querySelector(`.timer-line`);
+    this._timerLine = answerContainer.querySelector(`.timer-line`);
 
     const artistForm = answerContainer.querySelector(`.main-list`);
 
@@ -107,6 +107,31 @@ ${getGameHeaderTemplate(this.model.state)}
   }
 
   /**
+   * Update timer values and line
+   * @param {number} time - New time
+   */
+  updateTime(time) {
+    this._addBlinking(time);
+    const {minutes, seconds} = formatTime(time);
+    const radius = this._timerLine.r.animVal.value;
+
+    this._timeMinutes.textContent = addZeroInFront(minutes);
+    this._timeSeconds.textContent = addZeroInFront(seconds);
+
+    this._timerLine.style.strokeDashoffset = getStrokeOffset(time, radius);
+  }
+
+  /**
+   * Add time blinking
+   * @param {number} time - Remaining time
+   */
+  _addBlinking(time) {
+    if (time < CRITICAL_TIME && !this._timerContainer.classList.contains(`timer-value--finished`)) {
+      this._timerContainer.classList.add(`timer-value--finished`);
+    }
+  }
+
+  /**
    * Do on right answer
    */
   onSuccess() {
@@ -118,31 +143,6 @@ ${getGameHeaderTemplate(this.model.state)}
    */
   onMistake() {
 
-  }
-
-  /**
-   * Update timer values and line
-   * @param {number} time - New time
-   */
-  updateTime(time) {
-    this._addBlinking(time);
-    const {minutes, seconds} = formatTime(time);
-    const radius = this.timerLine.r.animVal.value;
-
-    this.timeMinutes.textContent = addZeroInFront(minutes);
-    this.timeSeconds.textContent = addZeroInFront(seconds);
-
-    this.timerLine.style.strokeDashoffset = getStrokeOffset(time, radius);
-  }
-
-  /**
-   * Add time blinking
-   * @param {number} time - Remaining time
-   */
-  _addBlinking(time) {
-    if (time < CRITICAL_TIME && !this.timerContainer.classList.contains(`timer-value--finished`)) {
-      this.timerContainer.classList.add(`timer-value--finished`);
-    }
   }
 
 }

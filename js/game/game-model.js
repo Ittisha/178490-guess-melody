@@ -7,7 +7,7 @@ class GameModel {
    * @param {Array} data - Contains games data
    */
   constructor(data) {
-    this.data = data;
+    this._data = data;
   }
 
   /**
@@ -49,7 +49,7 @@ class GameModel {
    * Set next question number and index
    */
   defineNextQuestion() {
-    this.update(nextLevel(this.state, this.data));
+    this.update(nextLevel(this.state, this._data));
   }
 
 
@@ -58,7 +58,7 @@ class GameModel {
    * @return {Object}
    */
   getQuestion() {
-    return this.data[this.state.questionIndex];
+    return this._data[this.state.questionIndex];
   }
 
   /**

@@ -31,14 +31,14 @@ class WelcomeView extends AbstractView {
    */
   bind() {
     const container = this.element;
-    this.playButton = container.querySelector(`.main-play`);
+    this._playButton = container.querySelector(`.main-play`);
 
     const onPlayButtonClick = () => {
       this.onStart();
-      this.playButton.removeEventListener(`click`, onPlayButtonClick);
+      this._playButton.removeEventListener(`click`, onPlayButtonClick);
     };
 
-    this.playButton.addEventListener(`click`, onPlayButtonClick);
+    this._playButton.addEventListener(`click`, onPlayButtonClick);
   }
 
   /**
@@ -50,7 +50,7 @@ class WelcomeView extends AbstractView {
    * Show start button
    */
   showButton() {
-    this.playButton.style.display = `block`;
+    this._playButton.style.display = `block`;
   }
 
 }

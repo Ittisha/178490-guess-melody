@@ -1,5 +1,5 @@
 import WelcomeView from '../views/welcome-view';
-import {changeView} from '../utils/render-screen';
+import changeView from '../utils/render-screen';
 import App from '../application';
 import ModalWindow from "./modal-window";
 import Preloader from "./preloader";
@@ -17,18 +17,18 @@ class WelcomeScreen {
    * Create new welcome screen
    */
   constructor() {
-    this.view = new WelcomeView();
+    this._view = new WelcomeView();
   }
 
   /**
    * Initiate welcome screen
    */
   init() {
-    changeView(this.view);
-    this.preloader = new Preloader(this.view.element, this.view.playButton);
-    this.preloader.init();
+    changeView(this._view);
+    this._preloader = new Preloader(this._view.element, this._view.playButton);
+    this._preloader.init();
 
-    this.view.onStart = () => {
+    this._view.onStart = () => {
       App.startGame();
     };
   }
@@ -37,8 +37,8 @@ class WelcomeScreen {
    * Remove preloader activate start button
    */
   letStart() {
-    this.preloader.remove();
-    this.view.showButton();
+    this._preloader.remove();
+    this._view.showButton();
   }
 
   /**
