@@ -1,4 +1,4 @@
-import {initialState} from '../data/initial-data';
+import {CRITICAL_TIME, initialState} from '../data/initial-data';
 import {addZeroInFront, formatTime} from '../utils/utils';
 import getStrokeOffset from '../utils/get-stroke-offset';
 
@@ -15,7 +15,7 @@ const getGameHeaderTemplate = (state) => {
   const {minutes, seconds} = formatTime(state.timeLeft);
   const dashArray = 2 * Math.PI * TIMER_RADIUS;
   const offset = getStrokeOffset(state.timeLeft, TIMER_RADIUS);
-  const blinkingClass = state.timeLeft < 30000 ? `timer-value--finished` : ``;
+  const blinkingClass = state.timeLeft < CRITICAL_TIME ? `timer-value--finished` : ``;
 
   const mistakes = new Array(initialState.lives - leftLives)
       .fill(`<img class="main-mistake" src="img/wrong-answer.png" width="35" height="49">`)

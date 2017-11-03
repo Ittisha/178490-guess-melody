@@ -11,19 +11,6 @@ class AbstractView {
   }
 
   /**
-   * Creates DOM-element from template
-   * @return {Element}
-   */
-  _render() {
-    return getHtmlFromTemplate(this.template);
-  }
-
-  /**
-   * Bind callback
-   */
-  bind() {}
-
-  /**
    * Get DOM-element (external API)
    * @return {Element}
    */
@@ -36,12 +23,25 @@ class AbstractView {
   }
 
   /**
+   * Creates DOM-element from template
+   * @return {Element}
+   */
+  _render() {
+    return getHtmlFromTemplate(this.template);
+  }
+
+  /**
    * Method for getting node and binding listeners
    */
   _getMarkup() {
     this._element = this._render();
     this.bind();
   }
+
+  /**
+   * Bind callback
+   */
+  bind() {}
 }
 
 export default AbstractView;

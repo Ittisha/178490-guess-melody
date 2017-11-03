@@ -1,3 +1,6 @@
+/** @constant {number} */
+const TIMER_TICK_INTERVAL = 1000;
+
 /** Class representing a timer */
 class Timer {
   /**
@@ -17,7 +20,7 @@ class Timer {
       return -1;
     }
 
-    this.time -= 1000;
+    this.time -= TIMER_TICK_INTERVAL;
     return this.time;
   }
 }
