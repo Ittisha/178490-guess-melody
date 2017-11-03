@@ -15,7 +15,7 @@ class GenreLevelView extends AbstractView {
    */
   constructor(model) {
     super();
-    this.model = model;
+    this._model = model;
   }
 
   /**
@@ -23,7 +23,7 @@ class GenreLevelView extends AbstractView {
    * @return {string} - String template for html-markup
    */
   get template() {
-    const levelTask = this.model.getQuestion();
+    const levelTask = this._model.getQuestion();
     const answerVariantsData = [...levelTask.answers];
 
     const answers = answerVariantsData.map((song, index) => `<div class="genre-answer">
@@ -36,7 +36,7 @@ class GenreLevelView extends AbstractView {
       </div>
     </div>
   </div>
-  <input type="checkbox" name="answer" value="answer-${this.model.state.questionIndex + 1}" id="a-${index}" ${song.isRightAnswer ? `data-isRightAnswer` : ``}>
+  <input type="checkbox" name="answer" value="answer-${this._model.state.questionIndex + 1}" id="a-${index}" ${song.isRightAnswer ? `data-isRightAnswer` : ``}>
   <label class="genre-answer-check" for="a-${index}"></label>
  </div>`).join(``);
 
@@ -50,7 +50,7 @@ class GenreLevelView extends AbstractView {
  </div>`;
 
     return `<section class="main main--level main--level-genre">
-${getGameHeaderTemplate(this.model.state)}
+${getGameHeaderTemplate(this._model.state)}
 ${task}
 </section>`;
   }
@@ -60,11 +60,11 @@ ${task}
    */
   bind() {
     const answerContainer = this.element;
-    this.timerContainer = answerContainer.querySelector(`.timer-value`);
-    this.timeSeconds = this.timerContainer.querySelector(`.timer-value-secs`);
-    this.timeMinutes = this.timerContainer.querySelector(`.timer-value-mins`);
+    this._timerContainer = answerContainer.querySelector(`.timer-value`);
+    this._timeSeconds = this._timerContainer.querySelector(`.timer-value-secs`);
+    this._timeMinutes = this._timerContainer.querySelector(`.timer-value-mins`);
 
-    this.timerLine = answerContainer.querySelector(`.timer-line`);
+    this._timerLine = answerContainer.querySelector(`.timer-line`);
 
     const playerControls = Array.from(answerContainer.querySelectorAll(`.player-control`));
 
@@ -128,6 +128,32 @@ ${task}
   }
 
   /**
+   * Update timer values and line
+   * @param {number} time - New time
+   */
+  updateTime(time) {
+    this._addBlinking(time);
+    const {minutes, seconds} = formatTime(time);
+    const radius = this._timerLine.r.animVal.value;
+
+    this._timeMinutes.textContent = addZeroInFront(minutes);
+    this._timeSeconds.textContent = addZeroInFront(seconds);
+
+    this._timerLine.style.strokeDashoffset = getStrokeOffset(time, radius);
+  }
+
+  /**
+   * Add time blinking
+   * @param {number} time - Remaining time
+   */
+  _addBlinking(time) {
+    if (time < CRITICAL_TIME && !this._timerContainer.classList.contains(`timer-value--finished`)) {
+      this._timerContainer.classList.add(`timer-value--finished`);
+    }
+  }
+
+
+  /**
    * Do on right answer
    */
   onSuccess() {
@@ -139,31 +165,6 @@ ${task}
    */
   onMistake() {
 
-  }
-
-  /**
-   * Update timer values and line
-   * @param {number} time - New time
-   */
-  updateTime(time) {
-    this._addBlinking(time);
-    const {minutes, seconds} = formatTime(time);
-    const radius = this.timerLine.r.animVal.value;
-
-    this.timeMinutes.textContent = addZeroInFront(minutes);
-    this.timeSeconds.textContent = addZeroInFront(seconds);
-
-    this.timerLine.style.strokeDashoffset = getStrokeOffset(time, radius);
-  }
-
-  /**
-   * Add time blinking
-   * @param {number} time - Remaining time
-   */
-  _addBlinking(time) {
-    if (time < CRITICAL_TIME && !this.timerContainer.classList.contains(`timer-value--finished`)) {
-      this.timerContainer.classList.add(`timer-value--finished`);
-    }
   }
 }
 

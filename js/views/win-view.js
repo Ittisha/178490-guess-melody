@@ -10,7 +10,7 @@ class WinView extends AbstractView {
    */
   constructor(result) {
     super();
-    this.result = result;
+    this._result = result;
   }
 
   /**
@@ -22,9 +22,9 @@ class WinView extends AbstractView {
     return `<section class="main main--result">
   <section class="logo" title="Угадай мелодию"><h1>Угадай мелодию</h1></section>
 
-  <h2 class="title">${this.result.title}</h2>
-  <div class="main-stat">${this.result.statistics}</div>
-  <span class="main-comparison">${this.result.text}</span>
+  <h2 class="title">${this._result.title}</h2>
+  <div class="main-stat">${this._result.statistics}</div>
+  <span class="main-comparison">${this._result.text}</span>
   <span role="button" tabindex="0" class="main-replay">Сыграть ещё раз</span>
 </section>`.trim();
   }

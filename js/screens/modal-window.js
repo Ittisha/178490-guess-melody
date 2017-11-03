@@ -10,18 +10,18 @@ class ModalWindow {
    * @param {boolean} isErrorDisplaying - Is it error window or now
    */
   constructor(message, isErrorDisplaying = true) {
-    this.view = new ModalWindowView(message);
-    this.isError = isErrorDisplaying;
+    this._view = new ModalWindowView(message);
+    this._isError = isErrorDisplaying;
   }
 
   /**
    * Initiate modal window
    */
   init() {
-    if (this.isError) {
-      this.view.addErrorClass();
+    if (this._isError) {
+      this._view.addErrorClass();
     }
-    document.body.appendChild(this.view.element);
+    document.body.appendChild(this._view.element);
   }
 }
 

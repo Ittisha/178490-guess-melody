@@ -1,5 +1,5 @@
 import {getPlayerResults} from '../game/game-utils';
-import {changeView} from '../utils/render-screen';
+import changeView from '../utils/render-screen';
 import WinView from '../views/win-view';
 import {getWinMessages} from '../results/get-result-data';
 import App from '../application';
@@ -30,14 +30,14 @@ class WinScreen {
   init(statistics, state) {
     const stats = statistics.map((it) => it.score);
 
-    this.result = getWinMessages(stats, getPlayerResults(state));
-    this.view = new WinView(this.result);
+    this._result = getWinMessages(stats, getPlayerResults(state));
+    this._view = new WinView(this._result);
 
-    this.view.onReplay = () => {
+    this._view.onReplay = () => {
       App.startGame();
     };
 
-    changeView(this.view);
+    changeView(this._view);
 
     Loader.saveResults(preprocessResult(state)).
         then(() => new ModalWindow(Messages.SUCCESS, false).init(),

@@ -11,4 +11,5 @@ const changeView = (view, parentNode = appScreen) => {
   clearNode(parentNode);
   parentNode.appendChild(view.element);
 };
-export {changeView};
+
+export default changeView;

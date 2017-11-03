@@ -10,23 +10,23 @@ class Preloader {
    * @param {Element} nodeAfter
    */
   constructor(parent, nodeAfter) {
-    this.parent = parent;
-    this.nodeAfter = nodeAfter;
+    this._parent = parent;
+    this._nodeAfter = nodeAfter;
   }
 
   /**
    * Initiate preloader
    */
   init() {
-    this.view = new PreloaderView();
-    this.parent.insertBefore(this.view.element, this.nodeAfter);
+    this._view = new PreloaderView();
+    this._parent.insertBefore(this._view.element, this._nodeAfter);
   }
 
   /**
    * Remove preloader
    */
   remove() {
-    this.parent.removeChild(this.view.element);
+    this._parent.removeChild(this._view.element);
   }
 }
 

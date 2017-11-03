@@ -11,7 +11,7 @@ class ModalWindowView extends AbstractView {
    */
   constructor(message) {
     super();
-    this.message = message;
+    this._message = message;
   }
 
   /**
@@ -19,7 +19,7 @@ class ModalWindowView extends AbstractView {
    * @return {string} - String template for html-markup
    */
   get template() {
-    return `<div class="modal-window">${this.message}
+    return `<div class="modal-window">${this._message}
   <button class="modal-window-close"></button>
 </div>`;
   }
