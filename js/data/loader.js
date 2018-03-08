@@ -1,5 +1,8 @@
 /** @constant {string} */
-const SERVER_URL = `https://es.dump.academy/guess-melody`;
+const DATA_URL = `http://musicgame.hamsterin.space/jsonrandom/`;
+
+/** @constant {string} */
+const STATS_URL = `https://es.dump.academy/guess-melody/stats/`;
 
 /** @constant {string} */
 const DEFAULT_NAME = `anna178490`;
@@ -11,7 +14,7 @@ class Loader {
    * @return {Promise}
    */
   static loadData() {
-    return fetch(`${SERVER_URL}/questions`).then((response) => {
+    return fetch(DATA_URL).then((response) => {
       if (response.ok) {
         return response.json();
       }
@@ -25,7 +28,7 @@ class Loader {
    * @return {Promise}
    */
   static loadResult(name = DEFAULT_NAME) {
-    return fetch(`${SERVER_URL}/stats/${name}`).then((response) => {
+    return fetch(`${STATS_URL}${name}`).then((response) => {
       if (response.ok) {
         return response.json();
       }
@@ -47,7 +50,7 @@ class Loader {
       },
       method: `POST`
     };
-    return fetch(`${SERVER_URL}/stats/${name}`, requestSettings);
+    return fetch(`${STATS_URL}${name}`, requestSettings);
   }
 }
 
